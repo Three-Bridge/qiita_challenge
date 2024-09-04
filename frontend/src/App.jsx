@@ -1,35 +1,16 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+export default function App() {
 
-function App() {
-  const [count, setCount] = useState(0)
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    return (
+        <>
+            <div>
+                <p>_____ _                     ____       _     _</p>
+                <p>|_ _| |__  _ __ ___  ___  | __ ) _ __(_) __| | __ _  ___  ___</p>
+                <p>| | | '_ \| '__/ _ \/ _ \ |  _ \| '__| |/ _` |/ _` |/ _ \/ __|</p>
+                <p>| | | | | | | |  __/  __/ | |_) | |  | | (_| | (_| |  __/\__ \</p>
+                <p>|_| |_| |_|_|  \___|\___| |____/|_|  |_|\__,_|\__, |\___||___/</p>
+                <p>|___/</p>
+            </div>
+        </>
+    )
 }
-
-export default App
