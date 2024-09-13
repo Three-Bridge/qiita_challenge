@@ -1,23 +1,21 @@
-import ThreeBridgeRepository, {DefaultThreeBridgeRepository} from './repository/ThreeBridgeRepository.ts'
-import {useEffect, useState} from 'react'
+import CameraSetupScreen from './screen/CameraSetupScreen.tsx'
+import {BrowserRouter, Route, Routes} from 'react-router-dom'
+import BarcodeScreen from './screen/BarcodeScreen.tsx'
+import CharacterSelectScreen from './screen/CharacterSelectScreen.tsx'
+import {useState} from 'react'
 
-type Props = {
-  threeBridgeRepository?: ThreeBridgeRepository
-}
-
-export default function App({threeBridgeRepository = new DefaultThreeBridgeRepository()}: Props) {
-  const [threeBridge, setThreeBridge] = useState<string[]>([])
-
-  useEffect(() => {
-    threeBridgeRepository.getThreeBridge()
-      .then(res => setThreeBridge(res))
-  }, [])
+export default function App() {
+  const [barcodeData, setBarcodeData] = useState<string | null>(null)
 
   return (
     <>
-      {threeBridge.map(text => (
-        <div key={window.crypto.randomUUID()}>{text}</div>
-      ))}
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<CameraSetupScreen />} />
+          <Route path='/scan' element={<BarcodeScreen barcodeData={barcodeData} setBarcodeData={setBarcodeData}/>} />
+          <Route path='/scan-select' element={<CharacterSelectScreen barcodeData={barcodeData} />} />
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
