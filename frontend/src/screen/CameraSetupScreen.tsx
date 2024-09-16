@@ -2,6 +2,7 @@ import {useNavigate} from 'react-router-dom'
 import {useEffect, useState} from 'react'
 import {signInWithRedirect} from '@aws-amplify/auth'
 import {Amplify} from 'aws-amplify'
+import { signOut } from 'aws-amplify/auth/cognito'
 
 Amplify.configure({
   Auth: {
@@ -40,7 +41,12 @@ export default function CameraSetupScreen() {
   }
 
   const signOutWithSocialAccount = async () => {
-    await signOutWithSocialAccount()
+    await signOut({
+      global: false,
+      oauth: {
+        redirectUrl: 'https://qiita-challenge-1.onrender.com'
+      }
+    })
   }
 
   return (
