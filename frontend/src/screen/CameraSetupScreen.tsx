@@ -7,7 +7,7 @@ export default function CameraSetupScreen() {
   const apiUrl = import.meta.env.VITE_API_URL
 
   useEffect(() => {
-    fetch(apiUrl)
+    fetch(apiUrl, { method: 'GET', headers: {'Content-Type': 'application/json'} })
       .then(res => console.log(res.json()))
   }, [])
 
