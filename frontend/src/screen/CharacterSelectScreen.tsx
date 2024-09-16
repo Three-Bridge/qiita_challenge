@@ -6,7 +6,7 @@ export default function CharacterSelectScreen({barcodeData}: Props){
 
   return(
     <>
-      <p>select</p>
+      <p>character select</p>
       <span>{barcodeData}</span>
     </>
   )
