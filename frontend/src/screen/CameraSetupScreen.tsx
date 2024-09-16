@@ -11,7 +11,7 @@ Amplify.configure({
       loginWith: {
         oauth: {
           domain: 'barcode-battler.auth.ap-northeast-1.amazoncognito.com',
-          scopes: ['openid', 'email', 'profile'],
+          scopes: ['profile'],
           redirectSignIn: ['https://qiita-challenge-1.onrender.com/callback'],
           redirectSignOut: ['https://qiita-challenge-1.onrender.com'],
           responseType: 'code',
