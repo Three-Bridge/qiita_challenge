@@ -12,7 +12,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<CameraSetupScreen />} />
-          <Route path='/scan' element={<BarcodeScreen barcodeData={barcodeData} setBarcodeData={setBarcodeData}/>} />
+          <Route path='/scan' element={<BarcodeScreen setBarcodeData={setBarcodeData}/>} />
           <Route path='/scan-select' element={<CharacterSelectScreen barcodeData={barcodeData} />} />
         </Routes>
       </BrowserRouter>
