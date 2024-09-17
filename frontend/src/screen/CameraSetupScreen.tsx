@@ -13,8 +13,8 @@ Amplify.configure({
         oauth: {
           domain: 'barcode-battler.auth.ap-northeast-1.amazoncognito.com',
           scopes: ['openid', 'email', 'profile'],
-          redirectSignIn: ['https://qiita-challenge-1.onrender.com'],
-          redirectSignOut: ['https://qiita-challenge-1.onrender.com'],
+          redirectSignIn: ['https://qiita-challenge-1.onrender.com', 'http://localhost:5173'],
+          redirectSignOut: ['https://qiita-challenge-1.onrender.com', 'http://localhost:5173'],
           responseType: 'code',
           providers: ['Google']
         }
@@ -47,7 +47,7 @@ export default function CameraSetupScreen() {
     await signOut({
       global: false,
       oauth: {
-        redirectUrl: 'https://qiita-challenge-1.onrender.com'
+        redirectUrl: import.meta.env.VITE_SIGN_OUT_REDIRECT_URL
       }
     })
   }
