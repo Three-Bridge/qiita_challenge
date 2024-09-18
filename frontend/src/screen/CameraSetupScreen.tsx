@@ -2,16 +2,16 @@ import {useNavigate} from 'react-router-dom'
 import {useEffect, useState} from 'react'
 import {signInWithRedirect} from '@aws-amplify/auth'
 import {Amplify} from 'aws-amplify'
-import {AuthUser, getCurrentUser, signOut } from 'aws-amplify/auth/cognito'
+import {AuthUser, getCurrentUser, signOut} from 'aws-amplify/auth/cognito'
 
 Amplify.configure({
   Auth: {
     Cognito: {
-      userPoolId: 'ap-northeast-1_TUBhSTpkw',
-      userPoolClientId: 'j8kkhbqirvs8l3i181sind02j',
+      userPoolId: 'ap-northeast-1_nBog007S4',
+      userPoolClientId: '3cttt8i30gdu6sk4kjbd4s4c4',
       loginWith: {
         oauth: {
-          domain: 'barcode-battler.auth.ap-northeast-1.amazoncognito.com',
+          domain: 'barcode-battler-cog.auth.ap-northeast-1.amazoncognito.com',
           scopes: ['openid', 'email', 'profile'],
           redirectSignIn: ['https://qiita-challenge-1.onrender.com', 'http://localhost:5173'],
           redirectSignOut: ['https://qiita-challenge-1.onrender.com', 'http://localhost:5173'],
@@ -34,8 +34,23 @@ export default function CameraSetupScreen() {
       .then(res => res.json())
       .then(data => setLambda(data))
 
+    // getData()
+
     currentAuthenticatedUser()
   }, [])
+
+  // async function getData() {
+  //   try {
+  //     const restOperation = get({
+  //       apiName: 'bercode-battler',
+  //       path: '/api'
+  //     })
+  //     const response = await restOperation.response
+  //     console.log('response', response)
+  //   } catch (error) {
+  //     console.error('fetch [GET] / error',error)
+  //   }
+  // }
 
   const loginWithSocialAccount = async () => {
     await signInWithRedirect({
