@@ -6,7 +6,7 @@ const Range = styled.input.attrs({
   type: 'range',
   step: 'any',
 })<{ value: number; max: number; min: number }>`
-    width: 100%;
+    width: 100%; //バー全体の幅
     height: 20px;
     background: #ddd;
     outline: none;
@@ -18,7 +18,7 @@ const Range = styled.input.attrs({
     &::-webkit-slider-thumb {
         -webkit-appearance: none;
         appearance: none;
-        width: 50px;
+        width: 50px;//つまみ部分の幅 
         height: 20px;
         background-color: #4caf50;
         cursor: pointer;
@@ -34,6 +34,7 @@ const AutoSlider = () => {
   const [direction, setDirection] = useState(1); // スライダーの動く方向（1: 右、-1: 左）
   const min = 0;
   const max = 100;
+  const movingSpeed =50;
 
   useEffect(() => {
     let interval: NodeJS.Timeout | undefined;
@@ -50,7 +51,7 @@ const AutoSlider = () => {
           }
           return prevValue + direction; // 通常時は方向に応じて動かす
         });
-      }, 50); // スライダーの速度（50msごとに1単位動く）
+      }, movingSpeed);
     }
 
     return () => {
@@ -62,9 +63,9 @@ const AutoSlider = () => {
     const target = e.target as HTMLInputElement;
     // つまみ部分がクリックされた場合のみ動作を停止・再開
     if (e.clientX >= target.getBoundingClientRect().left &&
-      e.clientX <= target.getBoundingClientRect().right &&
-      e.clientY >= target.getBoundingClientRect().top &&
-      e.clientY <= target.getBoundingClientRect().bottom) {
+      e.clientX <= target.getBoundingClientRect().right )
+    {
+    console.log("X",e.clientX);
       setIsMoving(!isMoving); // つまみ部分をクリックした場合、動作を停止・再開
     }
   };
