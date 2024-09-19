@@ -3,6 +3,7 @@ import {useEffect, useState} from 'react'
 import {signInWithRedirect} from '@aws-amplify/auth'
 import {Amplify} from 'aws-amplify'
 import {AuthUser, getCurrentUser, signOut} from 'aws-amplify/auth/cognito'
+import { get } from 'aws-amplify/api'
 
 Amplify.configure({
   Auth: {
@@ -30,27 +31,27 @@ export default function CameraSetupScreen() {
   const [authUser, setAuthUser] = useState<AuthUser | null>(null)
 
   useEffect(() => {
-    fetch(apiUrl)
+    fetch('/api')
       .then(res => res.json())
       .then(data => setLambda(data))
 
-    // getData()
+    getData()
 
     currentAuthenticatedUser()
   }, [])
 
-  // async function getData() {
-  //   try {
-  //     const restOperation = get({
-  //       apiName: 'bercode-battler',
-  //       path: '/api'
-  //     })
-  //     const response = await restOperation.response
-  //     console.log('response', response)
-  //   } catch (error) {
-  //     console.error('fetch [GET] / error',error)
-  //   }
-  // }
+  async function getData() {
+    try {
+      const restOperation = get({
+        apiName: 'barcode-battler-api',
+        path: '/'
+      })
+      const response = await restOperation.response
+      console.log('response', response)
+    } catch (error) {
+      console.error('fetch [GET] / error',error)
+    }
+  }
 
   const loginWithSocialAccount = async () => {
     await signInWithRedirect({
