@@ -23,34 +23,26 @@ Amplify.configure({
   }
 })
 
+type MemberData = {
+  id: string,
+  name: string
+}
+
 export default function CameraSetupScreen() {
   const navigate = useNavigate()
-  const [lambda, setLambda] = useState<string | null>(null)
   const apiUrl = import.meta.env.VITE_API_URL
   const [authUser, setAuthUser] = useState<AuthUser | null>(null)
+  const [threeBridgeMember, setThreeBridgeMember] = useState<MemberData[]>([])
 
   useEffect(() => {
     fetch(apiUrl)
       .then(res => res.json())
-      .then(data => setLambda(data))
+      .then(members => setThreeBridgeMember(members.data))
 
-    // getData()
+    console.log(threeBridgeMember)
 
     currentAuthenticatedUser()
   }, [])
-
-  // async function getData() {
-  //   try {
-  //     const restOperation = get({
-  //       apiName: 'bercode-battler',
-  //       path: '/api'
-  //     })
-  //     const response = await restOperation.response
-  //     console.log('response', response)
-  //   } catch (error) {
-  //     console.error('fetch [GET] / error',error)
-  //   }
-  // }
 
   const loginWithSocialAccount = async () => {
     await signInWithRedirect({
@@ -79,11 +71,14 @@ export default function CameraSetupScreen() {
   return (
     <>
       <h2>バーコード読み取り</h2>
-      <div>{lambda}</div>
       <div>{authUser?.username || '未ログイン'}</div>
       <button onClick={() => loginWithSocialAccount()}>Googleでログイン</button>
       <button onClick={() => signOutWithSocialAccount()}>サインアウト</button>
       <button onClick={() => navigate('/scan')}>カメラを起動する</button>
+      <h2>Three Bridge Members</h2>
+      {threeBridgeMember.map((member: MemberData) => (
+        <div key={window.crypto.randomUUID()}>・{member.name}</div>
+      ))}
     </>
   )
 }
