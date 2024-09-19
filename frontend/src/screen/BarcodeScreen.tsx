@@ -1,6 +1,7 @@
 import {Dispatch, SetStateAction, useEffect, useRef} from 'react'
 import {BrowserMultiFormatReader, IScannerControls} from '@zxing/browser'
 import {useNavigate} from 'react-router-dom'
+import AutoSlider from "../sliderBar/sliderBar.tsx";
 
 type Props = {
   setBarcodeData: Dispatch<SetStateAction<string | null>>
@@ -66,6 +67,7 @@ export default function BarcodeScreen({setBarcodeData}: Props) {
     <div>
       <h1>Barcode Scanner</h1>
       <video ref={videoRef} style={{width: '100%'}} autoPlay playsInline></video>
+      <AutoSlider/>
     </div>
   )
 }
