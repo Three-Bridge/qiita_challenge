@@ -61,31 +61,42 @@ export default function CharacterSelectScreen({barcodeData}: Props) {
     }
   }
 
-  const createCharacterParameters = (barcodeDate: string | null) => {
-    if (barcodeDate) {
-      // 自分のキャラパラメータ設定
-      const myCharacterHp = paramerter(barcodeDate[4])
-      const myCharacterAttack = paramerter(barcodeDate[5])
-      const myCharacterDefence = paramerter(barcodeDate[6])
-      setMyCharacterParameters({hp: myCharacterHp, attack: myCharacterAttack, defence: myCharacterDefence})
-      // 敵のキャラパラメータ設定
-      const enemyCharacterHp = paramerter(barcodeDate[8])
-      const enemyCharacterAttack = paramerter(barcodeDate[9])
-      const enemyCharacterDefence = paramerter(barcodeDate[10])
-      setEnemyCharacterParameters({hp: enemyCharacterHp, attack: enemyCharacterAttack, defence: enemyCharacterDefence})
+  // パラメータ関数
+    const paramerter = (barcodeDateString: string) =>{
+        if (barcodeDateString === "0") {
+            return Math.floor((Math.random() * 9 + 1) * 100)
+        } else {
+            return Number(barcodeDateString) * 100
+        }
     }
-  }
 
-  useEffect(() => {
-    console.log(location)
-    createCharacterParameters(barcodeData)
-    displayCharacter(barcodeData)
-  }, [])
+    const createCharacterParameters = (barcodeDate: string | null) => {
+        if(barcodeDate){
+        // 自分のキャラパラメータ設定
+        const myCharacterHp = paramerter(barcodeDate[4])
+        const myCharacterAttack = paramerter(barcodeDate[5])
+        const myCharacterDefence = paramerter(barcodeDate[6])
+        setMyCharacterParameters({hp: myCharacterHp, attack: myCharacterAttack, defence: myCharacterDefence})
+        // 敵のキャラパラメータ設定
+        const enemyCharacterHp = paramerter(barcodeDate[8])
+        const enemyCharacterAttack = paramerter(barcodeDate[9])
+        const enemyCharacterDefence = paramerter(barcodeDate[10])
+        setEnemyCharacterParameters({hp: enemyCharacterHp, attack: enemyCharacterAttack, defence: enemyCharacterDefence})
+        }
+    }
+
+
+
+    useEffect(() => {
+        console.log(location)
+        createCharacterParameters(barcodeData)
+        displayCharacter(barcodeData)
+    }, [])
 
   return (
     <Authenticator
       socialProviders={['google', 'amazon', 'apple', 'facebook']}>
-      <p className={character}>Character Select</p>
+      {/*<p className={character}>Character Select</p>*/}
       <span>{barcodeData}</span>
       <iframe src={myCharacterimageUrl} width={'512px'} height={'512px'}/>
       <p>{`HP:${myCharacterParameters.hp}`}</p>

@@ -5,7 +5,13 @@ import styled from 'styled-components';
 export const Range = styled.input.attrs({
   type: 'range',
   step: 'any',
-})<{ value: number; max: number; min: number }>`
+})<{
+  value: number;
+  max: number;
+  min: number ;
+  color : string;
+
+}>`
     width: 100%; //バー全体の幅
     height: 20px;
     background: #ddd;

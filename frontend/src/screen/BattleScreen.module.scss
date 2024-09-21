@@ -11,12 +11,14 @@ body{
   grid-template-columns: auto;
 }
 
-.myCharacter {
-  //left: 0px;
+.myCharacterPicture {
+  width: 100px;
+  height: 100px;
 }
 
-.enemyCharacter {
-  //right: 0px;
+.enemyCharacterPicture {
+  width: 100px;
+  height: 100px;
 }
 .sliderContainer{
   position: relative;

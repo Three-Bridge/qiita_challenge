@@ -2,7 +2,7 @@ import CameraSetupScreen from './screen/CameraSetupScreen.tsx'
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import BarcodeScreen from './screen/BarcodeScreen.tsx'
 import CharacterSelectScreen from './screen/CharacterSelectScreen.tsx'
-import {useEffect, useState} from 'react'
+import { useState} from 'react'
 import { Amplify } from 'aws-amplify';
 import amplifyconfig from './amplifyconfiguration.json';
 import BattleScreen from "./screen/BattleScreen.tsx";
