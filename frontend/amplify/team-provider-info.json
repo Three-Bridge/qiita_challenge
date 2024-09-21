@@ -1,0 +1,30 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-authbarcodebattler-dev-fc902-authRole",
+      "UnauthRoleArn": "arn:aws:iam::920373022648:role/amplify-authbarcodebattler-dev-fc902-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::920373022648:role/amplify-authbarcodebattler-dev-fc902-authRole",
+      "Region": "ap-northeast-1",
+      "DeploymentBucketName": "amplify-authbarcodebattler-dev-fc902-deployment",
+      "UnauthRoleName": "amplify-authbarcodebattler-dev-fc902-unauthRole",
+      "StackName": "amplify-authbarcodebattler-dev-fc902",
+      "StackId": "arn:aws:cloudformation:ap-northeast-1:920373022648:stack/amplify-authbarcodebattler-dev-fc902/4fd708e0-77a0-11ef-8a9c-062b3052e3ed",
+      "AmplifyAppId": "d3l88tablul4vx",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-authbarcodebattler-dev-fc902-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
+    },
+    "categories": {
+      "function": {
+        "authbarcodebattler42c3b610": {
+          "deploymentBucketName": "amplify-authbarcodebattler-dev-fc902-deployment",
+          "s3Key": "amplify-builds/authbarcodebattler42c3b610-756446314444772b3344-build.zip"
+        }
+      },
+      "auth": {
+        "authbarcodebattler": {}
+      },
+      "api": {
+        "AuthBarcodeBattler": {}
+      }
+    }
+  }
+}

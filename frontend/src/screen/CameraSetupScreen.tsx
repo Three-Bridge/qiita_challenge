@@ -1,48 +1,41 @@
 import {useNavigate} from 'react-router-dom'
 import {useEffect, useState} from 'react'
 import {signInWithRedirect} from '@aws-amplify/auth'
-import {Amplify} from 'aws-amplify'
 import {AuthUser, getCurrentUser, signOut} from 'aws-amplify/auth/cognito'
+import {get} from 'aws-amplify/api'
 
-Amplify.configure({
-  Auth: {
-    Cognito: {
-      userPoolId: 'ap-northeast-1_nBog007S4',
-      userPoolClientId: '3cttt8i30gdu6sk4kjbd4s4c4',
-      loginWith: {
-        oauth: {
-          domain: 'barcode-battler-cog.auth.ap-northeast-1.amazoncognito.com',
-          scopes: ['openid', 'email', 'profile'],
-          redirectSignIn: ['https://qiita-challenge-1.onrender.com', 'http://localhost:5173'],
-          redirectSignOut: ['https://qiita-challenge-1.onrender.com', 'http://localhost:5173'],
-          responseType: 'code',
-          providers: ['Google']
-        }
-      }
-    }
-  }
-})
-
-type MemberData = {
-  id: string,
-  name: string
+type ResObject = {
+  success: string,
+  url: string
 }
 
 export default function CameraSetupScreen() {
+  // const apiUrl = import.meta.env.VITE_API_URL
   const navigate = useNavigate()
-  const apiUrl = import.meta.env.VITE_API_URL
   const [authUser, setAuthUser] = useState<AuthUser | null>(null)
-  const [threeBridgeMember, setThreeBridgeMember] = useState<MemberData[]>([])
+  const [resObject, setResObject] = useState<ResObject>({success: '', url: ''})
+
 
   useEffect(() => {
-    fetch(apiUrl)
-      .then(res => res.json())
-      .then(members => setThreeBridgeMember(members.data))
-
-    console.log(threeBridgeMember)
+    userGet()
+      .then(res => res?.body.text())
+      .then(text => setResObject(JSON.parse(text ?? JSON.stringify({success:'',url:''}))))
 
     currentAuthenticatedUser()
   }, [])
+
+  async function userGet() {
+    try {
+      const restOperation = get({
+        apiName: 'AuthBarcodeBattler',
+        path: '/auth',
+      })
+
+      return await restOperation.response
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const loginWithSocialAccount = async () => {
     await signInWithRedirect({
@@ -64,7 +57,7 @@ export default function CameraSetupScreen() {
       const user = await getCurrentUser()
       setAuthUser(user)
     } catch (error) {
-      console.log('未ログイン: ',error)
+      console.log('未ログイン: ', error)
     }
   }
 
@@ -72,13 +65,10 @@ export default function CameraSetupScreen() {
     <>
       <h2>バーコード読み取り</h2>
       <div>{authUser?.username || '未ログイン'}</div>
+      <div>{resObject.success}</div>
       <button onClick={() => loginWithSocialAccount()}>Googleでログイン</button>
       <button onClick={() => signOutWithSocialAccount()}>サインアウト</button>
       <button onClick={() => navigate('/scan')}>カメラを起動する</button>
-      <h2>Three Bridge Members</h2>
-      {threeBridgeMember.map((member: MemberData) => (
-        <div key={window.crypto.randomUUID()}>・{member.name}</div>
-      ))}
     </>
   )
 }
