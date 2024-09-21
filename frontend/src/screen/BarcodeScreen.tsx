@@ -1,7 +1,7 @@
 import {Dispatch, SetStateAction, useEffect, useRef} from 'react'
 import {BrowserMultiFormatReader, IScannerControls} from '@zxing/browser'
 import {useNavigate} from 'react-router-dom'
-import AutoSlider from "../sliderBar/sliderBar.tsx";
+import {Authenticator} from '@aws-amplify/ui-react'
 
 type Props = {
   setBarcodeData: Dispatch<SetStateAction<string | null>>
@@ -16,7 +16,7 @@ export default function BarcodeScreen({setBarcodeData}: Props) {
   useEffect(() => {
     const codeReader = new BrowserMultiFormatReader()
     startScanner(codeReader)
-    return(() => {
+    return (() => {
       cleanupScannerAndStream()
     })
   }, [])
@@ -46,7 +46,7 @@ export default function BarcodeScreen({setBarcodeData}: Props) {
 
         cleanupScannerAndStream()
 
-        navigate('/scan-select')
+        navigate('/auth/scan-select')
       }
     })
   }
@@ -64,10 +64,13 @@ export default function BarcodeScreen({setBarcodeData}: Props) {
   }
 
   return (
-    <div>
-      <h1>Barcode Scanner</h1>
-      <video ref={videoRef} style={{width: '100%'}} autoPlay playsInline></video>
-    </div>
+    <Authenticator
+      socialProviders={['google', 'amazon', 'apple', 'facebook']}>
+      <div>
+        <h1>Barcode Scanner</h1>
+        <video ref={videoRef} style={{width: '100%'}} autoPlay playsInline></video>
+      </div>
+    </Authenticator>
   )
 }
 

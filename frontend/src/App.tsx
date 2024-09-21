@@ -8,8 +8,6 @@ import amplifyconfig from './amplifyconfiguration.json';
 import BattleScreen from "./screen/BattleScreen.tsx";
 import WinOrLossScreen from "./screen/WinOrLossScreen.tsx";
 import BattleRecordScreen from "./screen/BattleRecordScreen.tsx";
-import useSound from "use-sound";
-import OpeningBgm from "./bgm/OpeningBgm.mp3"
 import './screen/login.css'
 import StartScreen from './screen/StartScreen.tsx'
 
@@ -32,21 +30,22 @@ Amplify.configure(awsconfig)
 
 export default function App() {
   const [barcodeData, setBarcodeData] = useState<string | null>(null)
-const [play, stop] = useSound(OpeningBgm)
+// const [play, stop] = useSound(OpeningBgm)
 
   useEffect(() => {
-    play()
+    // play()
   }, []);
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<CameraSetupScreen openingBgm={OpeningBgm}/>} />
-          <Route path='/scan' element={<BarcodeScreen setBarcodeData={setBarcodeData}/>} />
-          <Route path='/scan-select' element={<CharacterSelectScreen barcodeData={barcodeData} />} />
-          <Route path='/battle' element={<BattleScreen/>} />
-          <Route path='/winOrLoss' element={<WinOrLossScreen/>} />
-          <Route path='/battleRecord' element={<BattleRecordScreen/>} />
+          <Route path='/' element={<StartScreen/>} />
+          <Route path='/auth/login' element={<CameraSetupScreen/>} />
+          <Route path='/auth/scan' element={<BarcodeScreen setBarcodeData={setBarcodeData}/>} />
+          <Route path='/auth/scan-select' element={<CharacterSelectScreen barcodeData={barcodeData} />} />
+          <Route path='/auth/battle' element={<BattleScreen/>} />
+          <Route path='/auth/winOrLoss' element={<WinOrLossScreen/>} />
+          <Route path='/auth/battleRecord' element={<BattleRecordScreen/>} />
         </Routes>
       </BrowserRouter>
     </>
