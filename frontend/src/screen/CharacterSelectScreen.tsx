@@ -38,19 +38,22 @@ export default function CharacterSelectScreen({barcodeData}: Props) {
     const displayCharacter = async (barcodeDate: string | null) => {
         if (barcodeDate) {
             const valueEncodedInBase64 = btoa(barcodeData as string)
-            const generatingAlphabet = valueEncodedInBase64[3]
+            const generatingAlphabetForMyCharacter = valueEncodedInBase64[3]
+            const generatingAlphabetForEnemyCharacter = valueEncodedInBase64[7]
             // @ts-ignore
             try {
-                const myCharacterImageUrl = await threeBridgeRepository.createCharacter(generatingAlphabet)
+                const myCharacterImageUrl = await threeBridgeRepository.createCharacter(generatingAlphabetForMyCharacter)
+                const EnemyCharacterImageUrl = await threeBridgeRepository.createCharacter(generatingAlphabetForEnemyCharacter)
                 setMyCharacterimageUrl(myCharacterImageUrl)
-
+                setEnemyCharacterimageUrl(EnemyCharacterImageUrl)
             } catch (error) {
                 console.error("キャラクター表示中にエラーが発生しました:", error);
             }
         }
     }
 
-    const createCharacterParameters = (barcodeDate: string) => {
+    const createCharacterParameters = (barcodeDate: string | null) => {
+        if(barcodeDate){
         // 自分のキャラパラメータ設定
         const myCharacterHp = paramerter(barcodeDate[4])
         const myCharacterAttack = paramerter(barcodeDate[5])
@@ -58,10 +61,11 @@ export default function CharacterSelectScreen({barcodeData}: Props) {
         setMyCharacterParameters({hp: myCharacterHp, attack: myCharacterAttack, defence: myCharacterDefence})
 
         // 敵のキャラパラメータ設定
-        const enemyCharacterHp = paramerter(barcodeDate[7])
-        const enemyCharacterAttack = paramerter(barcodeDate[8])
-        const enemyCharacterDefence = paramerter(barcodeDate[9])
-        setMyCharacterParameters({hp: enemyCharacterHp, attack: enemyCharacterAttack, defence: enemyCharacterDefence})
+        const enemyCharacterHp = paramerter(barcodeDate[8])
+        const enemyCharacterAttack = paramerter(barcodeDate[9])
+        const enemyCharacterDefence = paramerter(barcodeDate[10])
+        setEnemyCharacterParameters({hp: enemyCharacterHp, attack: enemyCharacterAttack, defence: enemyCharacterDefence})
+        }
     }
 
     useEffect(() => {
