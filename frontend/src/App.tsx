@@ -5,6 +5,7 @@ import CharacterSelectScreen from './screen/CharacterSelectScreen.tsx'
 import {useState} from 'react'
 import { Amplify } from 'aws-amplify';
 import amplifyconfig from './amplifyconfiguration.json';
+import BattleScreen from "./screen/BattleScreen.tsx";
 Amplify.configure(amplifyconfig)
 
 
@@ -18,6 +19,7 @@ export default function App() {
           <Route path='/' element={<CameraSetupScreen />} />
           <Route path='/scan' element={<BarcodeScreen setBarcodeData={setBarcodeData}/>} />
           <Route path='/scan-select' element={<CharacterSelectScreen barcodeData={barcodeData} />} />
+          <Route path='/battle' element={<BattleScreen/>} />
         </Routes>
       </BrowserRouter>
     </>

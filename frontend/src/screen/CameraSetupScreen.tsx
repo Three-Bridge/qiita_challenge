@@ -69,6 +69,7 @@ export default function CameraSetupScreen() {
       <button onClick={() => loginWithSocialAccount()}>Googleでログイン</button>
       <button onClick={() => signOutWithSocialAccount()}>サインアウト</button>
       <button onClick={() => navigate('/scan')}>カメラを起動する</button>
+      <button onClick={() => navigate('/battle')}>バトル画面</button>
     </>
   )
 }

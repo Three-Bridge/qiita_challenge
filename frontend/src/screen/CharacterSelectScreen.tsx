@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import {DefaultThreeBridgeRepository} from "../repository/ThreeBridgeRepository.ts";
+import {useNavigate} from "react-router-dom";
 
 type Props = {
     barcodeData: string | null;
@@ -7,20 +8,64 @@ type Props = {
 
 export default function CharacterSelectScreen({barcodeData}: Props) {
     const threeBridgeRepository = new DefaultThreeBridgeRepository();
-    const [imageUrl, setimageUrl] = useState<string>('')
+    // 自分のキャラ作製
+    const [myCharacterimageUrl, setMyCharacterimageUrl] = useState<string>('')
+    const [myCharacterParameters, setMyCharacterParameters] = useState<{
+        hp: string | number,
+        attack: string | number,
+        defence: string | number
+    }>({hp: '', attack: '', defence: ''})
+    const navigate = useNavigate()
+
+
+    // 敵キャラ作製
+    const [enemyCharacterimageUrl, setEnemyCharacterimageUrl] = useState<string>('')
+    const [enemyCharacterParameters, setEnemyCharacterParameters] = useState<{
+        hp: string | number,
+        attack: string | number,
+        defence: string | number
+    }>({hp: '', attack: '', defence: ''})
+
+    // パラメータ関数
+    function paramerter(barcodeDateString: string) {
+        if (barcodeDateString === "0") {
+            return (Math.floor((Math.random() * 9 + 1) * 100)).toString()
+        } else {
+            return (Number(barcodeDateString) * 100).toString()
+        }
+    }
+
     const displayCharacter = async (barcodeDate: string | null) => {
         if (barcodeDate) {
-            const valueEncodedInBase64 = btoa(barcodeData)
+            const valueEncodedInBase64 = btoa(barcodeData as string)
             const generatingAlphabet = valueEncodedInBase64[3]
+            // @ts-ignore
             try {
-                const res = await threeBridgeRepository.createCharacter(generatingAlphabet)
-                setimageUrl(res)
+                const myCharacterImageUrl = await threeBridgeRepository.createCharacter(generatingAlphabet)
+                setMyCharacterimageUrl(myCharacterImageUrl)
+
             } catch (error) {
                 console.error("キャラクター表示中にエラーが発生しました:", error);
             }
         }
     }
+
+    const createCharacterParameters = (barcodeDate: string) => {
+        // 自分のキャラパラメータ設定
+        const myCharacterHp = paramerter(barcodeDate[4])
+        const myCharacterAttack = paramerter(barcodeDate[5])
+        const myCharacterDefence = paramerter(barcodeDate[6])
+        setMyCharacterParameters({hp: myCharacterHp, attack: myCharacterAttack, defence: myCharacterDefence})
+
+        // 敵のキャラパラメータ設定
+        const enemyCharacterHp = paramerter(barcodeDate[7])
+        const enemyCharacterAttack = paramerter(barcodeDate[8])
+        const enemyCharacterDefence = paramerter(barcodeDate[9])
+        setMyCharacterParameters({hp: enemyCharacterHp, attack: enemyCharacterAttack, defence: enemyCharacterDefence})
+    }
+
     useEffect(() => {
+        createCharacterParameters(barcodeData)
         displayCharacter(barcodeData)
     }, [])
 
@@ -28,7 +73,26 @@ export default function CharacterSelectScreen({barcodeData}: Props) {
         <>
             <p>Character Select</p>
             <span>{barcodeData}</span>
-            <iframe src={imageUrl} width={'512px'} height={'512px'}/>
+            <iframe src={myCharacterimageUrl} width={'512px'} height={'512px'}/>
+            <p>{`HP:${myCharacterParameters.hp}`}</p>
+            <p>{`ATTACK:${myCharacterParameters.attack}`}</p>
+            <p>{`Defense:${myCharacterParameters.defence}`}</p>
+            <button onClick={() => navigate("/battle", {
+                state: {
+                    myCharacterParameters: {
+                        image: myCharacterimageUrl,
+                        hp: myCharacterParameters.hp,
+                        attack: myCharacterParameters.attack,
+                        defence: myCharacterParameters.defence
+                    },
+                    enemyCharacterParameters:{
+                        image: enemyCharacterimageUrl,
+                        hp: enemyCharacterParameters.hp,
+                        attack: enemyCharacterParameters.attack,
+                        defence: enemyCharacterParameters.defence
+                    }
+                }
+            })}></button>
         </>
     );
 }

@@ -3,7 +3,7 @@ import Http, {NetWorkHttp} from '../http/NetworkHttp'
 export default interface ThreeBridgeRepository {
     getThreeBridge(): Promise<string[]>
 
-    createCharacter(barcode: string): Promise<string>
+    createCharacter(generatingAlphabet: string): Promise<string>
 }
 
 export class DefaultThreeBridgeRepository implements ThreeBridgeRepository {
@@ -13,9 +13,9 @@ export class DefaultThreeBridgeRepository implements ThreeBridgeRepository {
 
     http: Http
 
-    async createCharacter(barcode: string): Promise<string> {
+    async createCharacter(generatingAlphabet: string): Promise<string> {
         const apiKey = import.meta.env.VITE_OPENAI_API_KEY
-        const characterDescription = `Create a Game Boy-era pixel art character inspired by a creature or animal that starts with the letter {$alphabet}. The character should have a retro, low-resolution pixel art style, typical of old-school handheld games, with simple but charming details.`;
+        const characterDescription = `Create a Game Boy-era pixel art character inspired by a creature or animal that starts with the letter ${generatingAlphabet}. The character should have a retro, low-resolution pixel art style, typical of old-school handheld games, with simple but charming details.`;
 
         try {
             const response = await fetch('https://api.openai.com/v1/images/generations', {

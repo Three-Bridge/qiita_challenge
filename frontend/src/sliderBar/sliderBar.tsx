@@ -1,4 +1,4 @@
-import { useState, useEffect, MouseEvent } from 'react';
+import React ,{useState, useEffect, MouseEvent, SetStateAction} from 'react';
 import styled from 'styled-components';
 
 // スライダーのスタイルを定義
@@ -28,9 +28,16 @@ const Range = styled.input.attrs({
     }
 `;
 
-const AutoSlider = () => {
+type Props={
+  // onClickAttack:()=> void,
+  // ref:React.MutableRefObject<HTMLElement | null>;
+  isMoving:boolean,
+  setIsMoving:React.Dispatch<SetStateAction<boolean>>;
+}
+const AutoSlider = ({isMoving,setIsMoving}:Props) => {
+// const AutoSlider = () => {
   const [value, setValue] = useState(50); // 初期値は50
-  const [isMoving, setIsMoving] = useState(true); // スライダーの動作状態を管理
+  // const [isMoving, setIsMoving] = useState(true); // スライダーの動作状態を管理
   const [direction, setDirection] = useState(1); // スライダーの動く方向（1: 右、-1: 左）
   const min = 0;
   const max = 100;
