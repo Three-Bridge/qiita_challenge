@@ -98,7 +98,7 @@ export default function BattleScreen() {
             className={styles.targetZone}
         />
       </div>
-      <button
+      <button className={styles.tapBottun}
         onClick={handleMouseDown}
       >
         tap
