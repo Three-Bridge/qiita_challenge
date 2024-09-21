@@ -15,7 +15,7 @@ export class DefaultThreeBridgeRepository implements ThreeBridgeRepository {
 
     async createCharacter(generatingAlphabet: string): Promise<string> {
         const apiKey = import.meta.env.VITE_OPENAI_API_KEY
-        const characterDescription = `Create a Game Boy-era pixel art character inspired by a creature or animal that starts with the letter ${generatingAlphabet}. The character should have a retro, low-resolution pixel art style, typical of old-school handheld games, with simple but charming details.`;
+        const characterDescription = `Create a Game Boy-era pixel art character inspired by a creature or animal that starts with the letter ${generatingAlphabet}. The character should have a retro, low-resolution pixel art style, typical of old-school handheld games, with simple but charming details.`
 
         try {
             const response = await fetch('https://api.openai.com/v1/images/generations', {
@@ -29,27 +29,22 @@ export class DefaultThreeBridgeRepository implements ThreeBridgeRepository {
                     n: 1, // 生成する画像の数
                     size: '512x512', // PNG画像のサイズ指定
                 }),
-            });
+            })
 
             if (!response.ok) {
-                throw new Error(`APIリクエストに失敗しました: ${response.statusText}`);
+                throw new Error(`APIリクエストに失敗しました: ${response.statusText}`)
             }
 
-            const result = await response.json();
-            console.log(result)
-            // 生成された画像のURLを取得し、配列として返す
-            const imageUrl = result.data[0].url
-            console.log(imageUrl)
-            return imageUrl;
+            const result = await response.json()
+            return result.data[0].url
 
         } catch (error) {
-            console.error('キャラクター生成中にエラーが発生しました:', error);
-            throw error;
+            console.error('キャラクター生成中にエラーが発生しました:', error)
+            throw error
         }
     }
 
     getThreeBridge(): Promise<string[]> {
         return this.http.get('/api/threebridge') as Promise<string[]>
     }
-
 }

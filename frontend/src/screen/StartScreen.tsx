@@ -8,6 +8,7 @@ export default function StartScreen({bgmPlayHandler}:Props) {
   return (
     <>
       <div>
+          {/*<img/ src={./src/logoPicture/barcode.png}>*/}
         <button onClick={() => {
             // if(bgmPlayHandler) bgmPlayHandler()
             navigate('/auth/login')}}>つづき</button>

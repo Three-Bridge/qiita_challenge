@@ -4,7 +4,7 @@ export default function BattleRecordScreen(){
     return(
         <Authenticator
           socialProviders={['google', 'amazon', 'apple', 'facebook']}>
-            <div>私はBattleRecordScreenだ</div>
+            <div>私のBattleRecordScreenだ</div>
         </Authenticator>
     )
 }

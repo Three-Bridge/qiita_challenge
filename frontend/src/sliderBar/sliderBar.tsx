@@ -38,11 +38,13 @@ export const Range = styled.input.attrs({
 type Props={
   // onClickAttack:()=> void,
   // ref:React.MutableRefObject<HTMLElement | null>;
-  isMoving:boolean,
-  setIsMoving:React.Dispatch<SetStateAction<boolean>>;
+  isMoving:number,
+  setIsMoving:React.Dispatch<SetStateAction<number>>;
   setTapPoints:React.Dispatch<SetStateAction<number>>;
+  enemyAttack :()=>void;
+  // barSpeedUpValue:number
 }
-export const AutoSlider = ({isMoving,setIsMoving,setTapPoints}:Props) => {
+export const AutoSlider = ({isMoving,setIsMoving,setTapPoints, enemyAttack}:Props) => {
 // const AutoSlider = () => {
   const [value, setValue] = useState(50); // 初期値は50
   // const [isMoving, setIsMoving] = useState(true); // スライダーの動作状態を管理
@@ -51,7 +53,8 @@ export const AutoSlider = ({isMoving,setIsMoving,setTapPoints}:Props) => {
   const max = 100;
   const barStyleColor="green"
   const barWidth="5px"
-  const movingSpeed =25;
+  // const movingSpeed =25 * endCount;
+  const [movingSpeed, setMovingSpeed] = useState(25)
   const slideRef = useRef(null);
 
   useEffect(() => {
@@ -62,6 +65,8 @@ export const AutoSlider = ({isMoving,setIsMoving,setTapPoints}:Props) => {
         setValue((prevValue) => {
           if (prevValue >= max) {
             setDirection(-1); // 左へ移動
+            enemyAttack();
+            setMovingSpeed((current) => current - 1)
             return prevValue - 1; // 折り返し時も少し戻る
           } else if (prevValue <= min) {
             setDirection(1); // 右へ移動

@@ -2,32 +2,34 @@ import {AutoSlider, Range} from '../sliderBar/sliderBar.tsx'
 import React, {useEffect, useState} from 'react'
 // import {useLocation} from "react-router-dom";
 import styles from './BattleScreen.module.scss'
-import {useLocation} from 'react-router-dom'
+import {useLocation, useNavigate} from 'react-router-dom'
 import {Authenticator} from '@aws-amplify/ui-react'
 import BattleBgm from '../bgm/BattleBgm02.mp3'
 import useSound from "use-sound";
 
 type Props = {
     barcodeData: string | null;
+    endPoint : false | true;
 };
 
 export default function BattleScreen({barcodeData}: Props) {
+    const navigate = useNavigate()
     const [setPoints, setTapPoints] = useState(0)
-    const [isMoving, setIsMoving] = useState(true)
+    const [isMoving, setIsMoving] = useState(0)
     const [myCharacterParameters, setMyCharacterParameters] = useState<{
         image: string
         hp: number,
         attack: number,
         defence: number
         // }>({image: '', hp: '', attack: '', defence: ''})
-    }>({image: '', hp: 1500, attack: 200, defence: 300})
+    }>({image: "../src/demoPicture/demo1.png", hp: 1500, attack: 200, defence: 300})
     const [enemyCharacterParameters, setEnemyCharacterParameters] = useState<{
         image: string
         hp: number,
         attack: number,
         defence: number
         // }>({image: '', hp: '', attack: '', defence: ''})
-    }>({image: '', hp: 1000, attack: 500, defence: 100})
+    }>({image: '../src/demoPicture/demo2.png', hp: 1000, attack: 500, defence: 100})
     const location = useLocation()
 
 //パラメータ関数
@@ -42,6 +44,8 @@ export default function BattleScreen({barcodeData}: Props) {
 
     // 10から30の間
     const targetZoneWidth = Math.floor(barSize(barcodeData![9]) / 3) * 10
+
+    // const barSpeedUpValue = Math.floor(barSize(barcodeData![9]) / 3)
 
     //3ー10の間
     const criticalZoneWidth = (() => {
@@ -74,36 +78,72 @@ export default function BattleScreen({barcodeData}: Props) {
     //     defence: location.state.enemyCharacterParameters.defence,
     //   })
     // }, [])
-    // useEffect(() => {
-    //   handleMouseDown()
-    // }, [setPoints]);
+
     const handleMouseDown = () => {
-        setIsMoving(!isMoving)
-        if (setPoints >= 50 - targetZoneWidth / 2 && setPoints <= 50 + targetZoneWidth / 2) {
-            if (setPoints >= 50 - criticalZoneWidth / 2 && setPoints <= 50 + criticalZoneWidth / 2){
+        setIsMoving((current)=>current +1)
+        if (setPoints >= 50 - criticalZoneWidth / 2 && setPoints <= 50 + criticalZoneWidth / 2){
+        console.log("critical ", setPoints)
+            if(myCharacterParameters.attack > enemyCharacterParameters.defence) {
                 setEnemyCharacterParameters({
                     ...enemyCharacterParameters,
-                    hp: enemyCharacterParameters.hp - myCharacterParameters.attack*2
+                    hp: enemyCharacterParameters.hp - myCharacterParameters.attack * 1.5
+                })
+            }else {
+                setEnemyCharacterParameters({
+                    ...enemyCharacterParameters,
+                    hp: enemyCharacterParameters.hp - myCharacterParameters.attack * 1.2
                 })
             }
-            console.log("in if ", setPoints)
-            setEnemyCharacterParameters({
-                ...enemyCharacterParameters,
-                hp: enemyCharacterParameters.hp - myCharacterParameters.attack
-            })
+        }
+        if (setPoints >= 50 - targetZoneWidth / 2 && setPoints <= 50 + targetZoneWidth / 2) {
+            console.log("attack", setPoints)
+            if (myCharacterParameters.attack > enemyCharacterParameters.defence) {
+                setEnemyCharacterParameters({
+                    ...enemyCharacterParameters,
+                    hp: enemyCharacterParameters.hp - (myCharacterParameters.attack + (myCharacterParameters.attack - enemyCharacterParameters.defence) * 0.1)
+                })
+            }else if(myCharacterParameters.attack == enemyCharacterParameters.defence){
+                setEnemyCharacterParameters({
+                    ...enemyCharacterParameters,
+                    hp: enemyCharacterParameters.hp - myCharacterParameters.attack
+                })
+
+            }else {
+                setEnemyCharacterParameters({
+                    ...enemyCharacterParameters,
+                    hp: enemyCharacterParameters.hp - (myCharacterParameters.attack - (myCharacterParameters.attack - enemyCharacterParameters.defence) * 0.1)
+                })
+
+            }
         }
     }
+
+    const enemyAttack = () => {
+        console.log(Math.round((Math.random()/2+0.5)*10)/10)
+        setMyCharacterParameters({
+            ...myCharacterParameters,
+            hp: myCharacterParameters.hp - enemyCharacterParameters.attack * (Math.round((Math.random()/2+0.5)*10)/10)
+        })
+    }
+
+    useEffect(() => {
+        //screen moving
+        if(enemyCharacterParameters.hp <= 0 ) {
+            navigate('/auth/winOrLoss',{state :{winCharacter: myCharacterParameters.image,winner:"User" ,userResult:"win" }})
+        }else if(myCharacterParameters.hp <= 0 ){
+            navigate('/auth/winOrLoss',{state :{winCharacter: enemyCharacterParameters.image,winner:"CPU" ,userResult:"lose"}})
+        }
+    }, [myCharacterParameters.hp,enemyCharacterParameters.hp]);
 
     return (
         <Authenticator
             socialProviders={['google', 'amazon', 'apple', 'facebook']}>
-            <div>test</div>
+            <div>Fight!</div>
             <div className={styles.characters}>
                 <div className={styles.myCharacter}>
                     <div className={styles.myName}>user</div>
                     <p className={styles.myCharacterName}>myCharacter</p>
-                    <img className={styles.characterPicture} src={"../src/demoPicture/demo1.png"} alt={'demo1'}></img>
-                    {/*<img src={myCharacterParameters.image}></img>*/}
+                    <img className={styles.characterPicture} src={myCharacterParameters.image} alt={'demo1'}></img>
                     <p>{`HP:${myCharacterParameters.hp}`}</p>
                     <p>{`Attack:${myCharacterParameters.attack}`}</p>
                     <p>{`Defence:${myCharacterParameters.defence}`}</p>
@@ -112,8 +152,7 @@ export default function BattleScreen({barcodeData}: Props) {
                 <div className={styles.enemyCharacter}>
                     <div className={styles.enemyName}>CPU</div>
                     <p>enemyCharacter</p>
-                    <img className={styles.characterPicture} src={"../src/demoPicture/demo2.png"} alt={'demo2'}></img>
-                    {/*<img className={styles.enemyCharacterPicture} src={enemyCharacterParameters.image}></img>*/}
+                    <img className={styles.characterPicture} src={enemyCharacterParameters.image}></img>
                     <p>{`HP:${enemyCharacterParameters.hp}`}</p>
                     <p>{`Attack:${enemyCharacterParameters.attack}`}</p>
                     <p>{`Defence:${enemyCharacterParameters.defence}`}</p>
@@ -124,6 +163,8 @@ export default function BattleScreen({barcodeData}: Props) {
                     isMoving={isMoving}
                     setIsMoving={setIsMoving}
                     setTapPoints={setTapPoints}
+                    enemyAttack ={enemyAttack}
+                    // barSpeedUpValue={barSpeedUpValue}
                 />
                 <Range
                     max={100}
@@ -145,7 +186,7 @@ export default function BattleScreen({barcodeData}: Props) {
             <button className={styles.tapBottun}
                     onClick={handleMouseDown}
             >
-                tap
+                {isMoving ? "Attack" : "Start"}
             </button>
         </Authenticator>
     )
