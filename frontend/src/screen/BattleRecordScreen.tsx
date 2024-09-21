@@ -71,7 +71,7 @@ export default function BattleRecordScreen() {
             <th>{index+1}</th>
             <th scope="row">{ele['battle-result']?"Win":"Lose"}</th>
             <td>{ele.opponent }</td>
-            <td>{ele['battle-date']}</td>
+            <td>{ele['battle-date'].slice(0,10)}</td>
           </tr>
         ))}
         </tbody>

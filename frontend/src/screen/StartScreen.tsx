@@ -3,6 +3,7 @@ import {useNavigate} from 'react-router-dom'
 type Props = {
     bgmPlayHandler?: ()=>void
 }
+
 export default function StartScreen({bgmPlayHandler}:Props) {
   const navigate = useNavigate()
   return (
