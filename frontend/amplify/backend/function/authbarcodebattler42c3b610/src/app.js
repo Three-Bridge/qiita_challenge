@@ -6,11 +6,9 @@ or in the "license" file accompanying this file. This file is distributed on an 
 See the License for the specific language governing permissions and limitations under the License.
 */
 
-
-
-
 const express = require('express')
 const bodyParser = require('body-parser')
+const {Client} = require('pg');
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 
 // declare a new express app
@@ -25,14 +23,23 @@ app.use(function (req, res, next) {
     next()
 });
 
+const client = new Client({
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASSWORD,
+    port: 5432,
+    ssl: {
+        rejectUnauthorized: false
+    }
+});
 
 /**********************
  * Example get method *
  **********************/
-
-app.get('/auth', function(req, res) {
-  // Add your code here
-  res.json({success: 'get call hoge!', url: req.url});
+app.get('/auth', function (req, res) {
+    // Add your code here
+    res.json({success: 'get call hoge!', url: req.url});
 });
 
 /****************************
