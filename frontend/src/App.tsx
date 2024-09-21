@@ -32,10 +32,14 @@ Amplify.configure(awsconfig)
 
 
 export default function App() {
-  const [barcodeData, setBarcodeData] = useState<string | null>(null)
-const [openingBgmPlay, stop] = useSound(OpeningBgm,{volume: 0.1})
+const [barcodeData, setBarcodeData] = useState<string | null>(null)
+const [openingBgmPlay, openingBgmStop] = useSound(OpeningBgm,{volume: 0.1})
+
+  // const dummyBarcodeData = "4901123018162";
+  const dummyBarcodeData = "4901178043162";
 
 const openigBgmPlayHandler = ()=>{openingBgmPlay()}
+// const openingBgmStopHandler = ()=>{openingBgmStop()}
 
   return (
     <>
@@ -44,13 +48,14 @@ const openigBgmPlayHandler = ()=>{openingBgmPlay()}
           <Route path='/' element={<StartScreen bgmPlayHandler={openigBgmPlayHandler}/>} />
           <Route path='/auth/login' element={<CameraSetupScreen/>} />
           <Route path='/auth/scan' element={<BarcodeScreen setBarcodeData={setBarcodeData}/>} />
-          <Route path='/auth/scan-select' element={<CharacterSelectScreen barcodeData={barcodeData} />} />
-          <Route path='/auth/battle' element={<BattleScreen />} />
+          <Route path='/auth/scan-select' element={<CharacterSelectScreen barcodeData={dummyBarcodeData} />} />
+          <Route path='/auth/battle' element={<BattleScreen barcodeData={dummyBarcodeData}/>} />
           <Route path='/auth/winOrLoss' element={<WinOrLossScreen/>} />
           <Route path='/auth/battleRecord' element={<BattleRecordScreen/>} />
         </Routes>
       </BrowserRouter>
     </>
+
   )
 }
 

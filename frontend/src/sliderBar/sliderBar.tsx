@@ -11,10 +11,11 @@ export const Range = styled.input.attrs({
   min: number ;
   width: string;
   color : string;
+  barBackgroundColor:string;
 }>`
     width: 100%; //バー全体の幅
     height: 20px;
-    background: #ddd;
+    background: ${props => props.barBackgroundColor};
     outline: none;
     pointer-events: none; // スライダー本体はイベントを受け取らない
     -webkit-appearance: none;
@@ -34,7 +35,6 @@ export const Range = styled.input.attrs({
         z-index: 1; // つまみが他の要素の上に来るように
     }
 `;
-
 type Props={
   // onClickAttack:()=> void,
   // ref:React.MutableRefObject<HTMLElement | null>;
@@ -97,6 +97,7 @@ export const AutoSlider = ({isMoving,setIsMoving,setTapPoints}:Props) => {
         min={min}
         max={max}
           color={barStyleColor}
+          barBackgroundColor="#ddd"
         width={barWidth}
         onPointerDown={handleMouseDown} // つまみをクリックすると動作を停止
         // onMouseDown={handleMouseDown} // つまみをクリックすると動作を停止

@@ -23,9 +23,9 @@ export default function CharacterSelectScreen({barcodeData}: Props) {
   // 敵キャラ作製
   const [enemyCharacterimageUrl, setEnemyCharacterimageUrl] = useState<string>('')
   const [enemyCharacterParameters, setEnemyCharacterParameters] = useState<{
-    hp: number,
-    attack:  number,
-    defence:  number
+    hp?: number,
+    attack?:  number,
+    defence?:  number
   }>({hp: undefined, attack: undefined, defence: undefined})
 
   const displayCharacter = async (barcodeDate: string | null) => {
@@ -53,8 +53,8 @@ export default function CharacterSelectScreen({barcodeData}: Props) {
   }
 
   // パラメータ関数
-    const paramerter = (barcodeDateString: string) =>{
-       const setNumber = Number(barcodeDateString)
+    const parameter = (barcodeDataString: string) =>{
+       const setNumber = Number(barcodeDataString)
         if (setNumber === 0) {
             return Math.floor((Math.random() * 9 + 1) * 100)
         } else {
@@ -62,17 +62,18 @@ export default function CharacterSelectScreen({barcodeData}: Props) {
         }
     }
 
-    const createCharacterParameters = (barcodeDate: string | null) => {
-        if(barcodeDate){
+    // パラメータセット
+    const createCharacterParameters = (barcodeData: string | null) => {
+        if(barcodeData){
         // 自分のキャラパラメータ設定
-        const myCharacterHp = paramerter(barcodeDate[4])
-        const myCharacterAttack = paramerter(barcodeDate[5])
-        const myCharacterDefence = paramerter(barcodeDate[6])
+        const myCharacterHp = parameter(barcodeData[4])
+        const myCharacterAttack = parameter(barcodeData[5])
+        const myCharacterDefence = parameter(barcodeData[6])
         setMyCharacterParameters({hp: myCharacterHp, attack: myCharacterAttack, defence: myCharacterDefence})
         // 敵のキャラパラメータ設定
-        const enemyCharacterHp = paramerter(barcodeDate[8])
-        const enemyCharacterAttack = paramerter(barcodeDate[9])
-        const enemyCharacterDefence = paramerter(barcodeDate[10])
+        const enemyCharacterHp = parameter(barcodeData[8])
+        const enemyCharacterAttack = parameter(barcodeData[9])
+        const enemyCharacterDefence = parameter(barcodeData[10])
         setEnemyCharacterParameters({hp: enemyCharacterHp, attack: enemyCharacterAttack, defence: enemyCharacterDefence})
         }
     }

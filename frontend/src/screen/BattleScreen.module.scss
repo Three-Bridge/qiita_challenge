@@ -1,30 +1,51 @@
 // CSS Style
+@import "../../node_modules/nes.css/css/nes.css";
+@import "@fontsource/press-start-2p";
 
-body{
-  background-color: #fafad2;
-}
-
+//body{
+//  background-color: #fafad2;
+//}
 
 .characters{
   display: flex;
   padding: 10px;
   flex: 1;
   grid-template-columns: auto;
+  align-items: center;
 }
 
-.CharacterPicture {
-  width: 100px;
-  height: 100px;
+.myCharacter{
+  margin-left: 10px;
+  margin-right: 20px;
+  justify-content: center;
+}
+.myCharacterName{
+ //font-family: 'Press Start 2P';
+}
 
+.vsText{
+  font-size: 30px;
+  justify-content: center;
+  text-align: center;
+}
+
+.enemyCharacter{
+  margin-left: 20px;
+  margin-right: 10px;
+  justify-content: center;
+}
+
+.characterPicture {
+  width: 150px; /* 画像の幅を200pxに固定 */
+  height: 150px; /* 画像の高さも200pxに固定 */
+  object-fit: cover; /* アスペクト比を維持しつつ、はみ出す部分は切り取る */
 }
 
 .tapBottun{
 
 }
 
-.vsText{
-  text-align: center;
-}
+
 
 .sliderContainer{
   position: relative;
@@ -34,4 +55,9 @@ body{
   position: absolute;
   top: 0;
   z-index: 2;
+}
+.criticalZone{
+  position: absolute;
+  top: 0;
+  z-index: 3;
 }
