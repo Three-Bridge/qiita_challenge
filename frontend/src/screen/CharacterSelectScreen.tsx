@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {DefaultThreeBridgeRepository} from "../repository/ThreeBridgeRepository.ts";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 type Props = {
     barcodeData: string | null;
@@ -16,7 +16,7 @@ export default function CharacterSelectScreen({barcodeData}: Props) {
         defence: string | number
     }>({hp: '', attack: '', defence: ''})
     const navigate = useNavigate()
-
+const location = useLocation()
 
     // 敵キャラ作製
     const [enemyCharacterimageUrl, setEnemyCharacterimageUrl] = useState<string>('')
@@ -27,7 +27,8 @@ export default function CharacterSelectScreen({barcodeData}: Props) {
     }>({hp: '', attack: '', defence: ''})
 
     // パラメータ関数
-    function paramerter(barcodeDateString: string) {
+    const paramerter = (barcodeDateString: string) =>{
+
         if (barcodeDateString === "0") {
             return (Math.floor((Math.random() * 9 + 1) * 100)).toString()
         } else {
@@ -47,8 +48,15 @@ export default function CharacterSelectScreen({barcodeData}: Props) {
                 setMyCharacterimageUrl(myCharacterImageUrl)
                 setEnemyCharacterimageUrl(EnemyCharacterImageUrl)
             } catch (error) {
-                console.error("キャラクター表示中にエラーが発生しました:", error);
+                console.error("自キャラクター表示中にエラーが発生しました:", error);
             }
+            try {
+                const EnemyCharacterImageUrl = await threeBridgeRepository.createCharacter(generatingAlphabetForEnemyCharacter)
+                setEnemyCharacterimageUrl(EnemyCharacterImageUrl)
+            } catch (error) {
+                console.error("敵キャラクター表示中にエラーが発生しました:", error);
+            }
+
         }
     }
 
@@ -59,7 +67,6 @@ export default function CharacterSelectScreen({barcodeData}: Props) {
         const myCharacterAttack = paramerter(barcodeDate[5])
         const myCharacterDefence = paramerter(barcodeDate[6])
         setMyCharacterParameters({hp: myCharacterHp, attack: myCharacterAttack, defence: myCharacterDefence})
-
         // 敵のキャラパラメータ設定
         const enemyCharacterHp = paramerter(barcodeDate[8])
         const enemyCharacterAttack = paramerter(barcodeDate[9])
@@ -69,13 +76,14 @@ export default function CharacterSelectScreen({barcodeData}: Props) {
     }
 
     useEffect(() => {
+        console.log(location)
         createCharacterParameters(barcodeData)
         displayCharacter(barcodeData)
     }, [])
 
     return (
         <>
-            <p>Character Select</p>
+            <p className={character}>Character Select</p>
             <span>{barcodeData}</span>
             <iframe src={myCharacterimageUrl} width={'512px'} height={'512px'}/>
             <p>{`HP:${myCharacterParameters.hp}`}</p>
@@ -96,7 +104,7 @@ export default function CharacterSelectScreen({barcodeData}: Props) {
                         defence: enemyCharacterParameters.defence
                     }
                 }
-            })}></button>
+            })}>たたかう</button>
         </>
     );
 }

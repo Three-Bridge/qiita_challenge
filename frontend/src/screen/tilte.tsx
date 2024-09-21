@@ -9,7 +9,7 @@ export default function tilte() {
             <button onClick={() => loginWithSocialAccount()}>Googleでログイン</button>
             <button onClick={() => signOutWithSocialAccount()}>サインアウト</button>
             <button onClick={() => navigate('/scan')}>つづきから</button>
-            <button onClick={() => navigate('/scan')}>はじめから</button>
+            {/*<button onClick={() => navigate('/scan')}>はじめから</button>*/}
         </>
     )
 

@@ -18,5 +18,11 @@ body{
 .enemyCharacter {
   //right: 0px;
 }
+.sliderContainer{
+  position: relative;
+}
 
-//parameter
+.targetZone {
+  position: absolute;
+  top: 0;
+}

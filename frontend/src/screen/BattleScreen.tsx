@@ -1,10 +1,11 @@
-import AutoSlider from "../sliderBar/sliderBar.tsx";
+import {AutoSlider , Range} from "../sliderBar/sliderBar.tsx";
 import {useEffect, useState} from "react";
 // import {useLocation} from "react-router-dom";
 import styles from "./BattleScreen.module.scss";
 import {useLocation} from "react-router-dom";
 
 export default function BattleScreen() {
+    const [attackPoints, setAttackPoints] = useState(0)
     const [isMoving, setIsMoving] = useState(true)
     const [myCharacterParameters, setMyCharacterParameters] = useState<{
         image: string
@@ -35,7 +36,8 @@ export default function BattleScreen() {
         })
     }, [])
     const handleMouseDown = () => {
-        setIsMoving(!isMoving)
+        setIsMoving(!isMoving);
+        // setMyCharacterParameters({...myCharacterParameters, hp:myCharacterParameters.hp -myCharacterParameters.attack})
     };
 
     return (
@@ -60,10 +62,14 @@ export default function BattleScreen() {
                     {/*<p><span>Defence:</span>{enemyCharacterParameters.defence}</p>*/}
                 </div>
             </div>
-            <AutoSlider
-                isMoving={isMoving}
-                setIsMoving={setIsMoving}
-            />
+            <div className={styles.sliderContainer}>
+                <AutoSlider
+                    isMoving={isMoving}
+                    setIsMoving={setIsMoving}
+                    setAttackPoints={setAttackPoints}
+                />
+                <Range max={100} min={0} value={50} className={styles.targetZone}/>
+            </div>
             <button
                 onClick={handleMouseDown}
             >

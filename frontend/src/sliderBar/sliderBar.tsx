@@ -1,8 +1,8 @@
-import React ,{useState, useEffect, MouseEvent, SetStateAction} from 'react';
+import React, {useState, useEffect, MouseEvent, SetStateAction, useRef} from 'react';
 import styled from 'styled-components';
 
 // スライダーのスタイルを定義
-const Range = styled.input.attrs({
+export const Range = styled.input.attrs({
   type: 'range',
   step: 'any',
 })<{ value: number; max: number; min: number }>`
@@ -18,7 +18,7 @@ const Range = styled.input.attrs({
     &::-webkit-slider-thumb {
         -webkit-appearance: none;
         appearance: none;
-        width: 50px;//つまみ部分の幅 
+        width: 5px;//つまみ部分の幅 
         height: 20px;
         background-color: #4caf50;
         cursor: pointer;
@@ -33,15 +33,17 @@ type Props={
   // ref:React.MutableRefObject<HTMLElement | null>;
   isMoving:boolean,
   setIsMoving:React.Dispatch<SetStateAction<boolean>>;
+  setAttackPoints:React.Dispatch<SetStateAction<number>>;
 }
-const AutoSlider = ({isMoving,setIsMoving}:Props) => {
+export const AutoSlider = ({isMoving,setIsMoving,setAttackPoints}:Props) => {
 // const AutoSlider = () => {
   const [value, setValue] = useState(50); // 初期値は50
   // const [isMoving, setIsMoving] = useState(true); // スライダーの動作状態を管理
   const [direction, setDirection] = useState(1); // スライダーの動く方向（1: 右、-1: 左）
   const min = 0;
   const max = 100;
-  const movingSpeed =50;
+  const movingSpeed =25;
+  const slideRef = useRef(null);
 
   useEffect(() => {
     let interval: NodeJS.Timeout | undefined;
@@ -60,7 +62,7 @@ const AutoSlider = ({isMoving,setIsMoving}:Props) => {
         });
       }, movingSpeed);
     }
-
+    setAttackPoints(Number((slideRef.current! as HTMLInputElement).value))
     return () => {
       if (interval) clearInterval(interval); // コンポーネントがアンマウントされるときにintervalをクリア
     };
@@ -80,6 +82,7 @@ const AutoSlider = ({isMoving,setIsMoving}:Props) => {
   return (
     <div>
       <Range
+          ref={slideRef}
         value={value}
         min={min}
         max={max}
@@ -90,4 +93,4 @@ const AutoSlider = ({isMoving,setIsMoving}:Props) => {
   );
 };
 
-export default AutoSlider;
+// export default AutoSlider;
