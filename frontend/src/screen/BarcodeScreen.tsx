@@ -1,4 +1,4 @@
-import {Dispatch, SetStateAction, useEffect, useRef} from 'react'
+import {Dispatch, SetStateAction, useEffect, useRef, useState} from 'react'
 import {BrowserMultiFormatReader, IScannerControls} from '@zxing/browser'
 import {useNavigate} from 'react-router-dom'
 import {Authenticator} from '@aws-amplify/ui-react'
@@ -8,29 +8,25 @@ type Props = {
 }
 
 export default function BarcodeScreen({setBarcodeData}: Props) {
-  const videoRef = useRef<HTMLVideoElement | null>(null)
   const streamRef = useRef<MediaStream | null>(null)
   const unsubscribeRef = useRef<IScannerControls | null>(null)
   const navigate = useNavigate()
+  const [videoElement, setVideoElement] = useState<HTMLVideoElement | null>(null)
 
   useEffect(() => {
     const codeReader = new BrowserMultiFormatReader()
-    startScanner(codeReader)
-    return (() => {
-      cleanupScannerAndStream()
-    })
-  }, [])
+    if (videoElement) {
+      startScanner(codeReader)
+    }
+  }, [videoElement])
 
   async function startScanner(codeReader: BrowserMultiFormatReader) {
     try {
-      const videoElement = videoRef.current
-      if (videoElement) {
-        const stream = await navigator.mediaDevices.getUserMedia({video: {facingMode: 'environment'}})
-        videoElement.srcObject = stream
-        streamRef.current = stream
+      const stream = await navigator.mediaDevices.getUserMedia({video: {facingMode: 'environment'}})
+      videoElement!.srcObject = stream
+      streamRef.current = stream
 
-        unsubscribeRef.current = await handleBarcodeScan(codeReader, videoElement)
-      }
+      unsubscribeRef.current = await handleBarcodeScan(codeReader, videoElement!)
     } catch (err) {
       console.error('Error accessing the camera: ', err)
     }
@@ -66,10 +62,8 @@ export default function BarcodeScreen({setBarcodeData}: Props) {
   return (
     <Authenticator
       socialProviders={['google', 'amazon', 'apple', 'facebook']}>
-      <div>
-        <h1>Barcode Scanner</h1>
-        <video ref={videoRef} style={{width: '100%'}} autoPlay playsInline></video>
-      </div>
+      <h1>Barcode Scanner</h1>
+      <video ref={(el) => setVideoElement(el)} style={{width: '100%'}} playsInline></video>
     </Authenticator>
   )
 }
