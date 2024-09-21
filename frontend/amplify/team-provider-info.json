@@ -16,7 +16,7 @@
       "function": {
         "authbarcodebattler42c3b610": {
           "deploymentBucketName": "amplify-authbarcodebattler-dev-fc902-deployment",
-          "s3Key": "amplify-builds/authbarcodebattler42c3b610-62677a4168694936795a-build.zip"
+          "s3Key": "amplify-builds/authbarcodebattler42c3b610-35694338584770623054-build.zip"
         }
       },
       "auth": {

@@ -73,6 +73,7 @@ export default function CameraSetupScreen() {
       <button onClick={() => signOutWithSocialAccount()}>サインアウト</button>
       <button onClick={() => navigate('/auth/scan')}>カメラを起動する</button>
       <button onClick={() => navigate('/auth/battle')}>バトル画面</button>
+      <button onClick={() => navigate('/auth/battleRecord')}>sen</button>
     </Authenticator>
   )
 }

@@ -19,10 +19,10 @@ app.use(bodyParser.json())
 app.use(awsServerlessExpressMiddleware.eventContext())
 
 // Enable CORS for all methods
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*")
-  res.header("Access-Control-Allow-Headers", "*")
-  next()
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*")
+    res.header("Access-Control-Allow-Headers", "*")
+    next()
 });
 
 
@@ -35,54 +35,58 @@ app.get('/auth', function(req, res) {
   res.json({success: 'get call hoge!', url: req.url});
 });
 
-app.get('/auth/*', function(req, res) {
-  // Add your code here
-  res.json({success: 'get call hoge!', url: req.url});
+/****************************
+ * Example post method *
+ ****************************/
+
+app.post('/auth', function (req, res) {
+    // Add your code here
+    res.json({success: 'post call succeed!', url: req.url, body: req.body})
+});
+
+app.post('/auth/battleRecord', async function (req, res) {
+    try {
+        if (!client._connected) {
+            await client.connect();
+        }
+        const selectQuery = `SELECT * FROM "battle-record" where "user-id"='${req.body["userName"]}' order by "battle-date" desc`;
+        const response = await client.query(selectQuery);
+
+        res.json(response.rows);
+    } catch (err) {
+        console.error('error fetching data', err);
+        res.json([]);
+    }
+});
+/****************************
+ * Example put method *
+ ****************************/
+
+app.put('/auth', function (req, res) {
+    // Add your code here
+    res.json({success: 'put call succeed!', url: req.url, body: req.body})
+});
+
+app.put('/auth/*', function (req, res) {
+    // Add your code here
+    res.json({success: 'put call succeed!', url: req.url, body: req.body})
 });
 
 /****************************
-* Example post method *
-****************************/
+ * Example delete method *
+ ****************************/
 
-app.post('/auth', function(req, res) {
-  // Add your code here
-  res.json({success: 'post call succeed!', url: req.url, body: req.body})
+app.delete('/auth', function (req, res) {
+    // Add your code here
+    res.json({success: 'delete call succeed!', url: req.url});
 });
 
-app.post('/auth/*', function(req, res) {
-  // Add your code here
-  res.json({success: 'post call succeed!', url: req.url, body: req.body})
+app.delete('/auth/*', function (req, res) {
+    // Add your code here
+    res.json({success: 'delete call succeed!', url: req.url});
 });
 
-/****************************
-* Example put method *
-****************************/
-
-app.put('/auth', function(req, res) {
-  // Add your code here
-  res.json({success: 'put call succeed!', url: req.url, body: req.body})
-});
-
-app.put('/auth/*', function(req, res) {
-  // Add your code here
-  res.json({success: 'put call succeed!', url: req.url, body: req.body})
-});
-
-/****************************
-* Example delete method *
-****************************/
-
-app.delete('/auth', function(req, res) {
-  // Add your code here
-  res.json({success: 'delete call succeed!', url: req.url});
-});
-
-app.delete('/auth/*', function(req, res) {
-  // Add your code here
-  res.json({success: 'delete call succeed!', url: req.url});
-});
-
-app.listen(3000, function() {
+app.listen(3000, function () {
     console.log("App started")
 });
 
