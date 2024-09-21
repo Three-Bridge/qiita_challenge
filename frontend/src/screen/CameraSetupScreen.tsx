@@ -3,6 +3,8 @@ import {useEffect, useState} from 'react'
 import {signInWithRedirect} from '@aws-amplify/auth'
 import {AuthUser, getCurrentUser, signOut} from 'aws-amplify/auth/cognito'
 import {get} from 'aws-amplify/api'
+import './login.css'
+import {Authenticator} from '@aws-amplify/ui-react'
 
 type ResObject = {
   success: string,
@@ -19,7 +21,7 @@ export default function CameraSetupScreen() {
   useEffect(() => {
     userGet()
       .then(res => res?.body.text())
-      .then(text => setResObject(JSON.parse(text ?? JSON.stringify({success:'',url:''}))))
+      .then(text => setResObject(JSON.parse(text ?? JSON.stringify({success: '', url: ''}))))
 
     currentAuthenticatedUser()
   }, [])
@@ -62,7 +64,8 @@ export default function CameraSetupScreen() {
   }
 
   return (
-    <>
+    <Authenticator
+      socialProviders={['google', 'amazon', 'apple', 'facebook']}>
       <h2>バーコード読み取り</h2>
       <div>{authUser?.username || '未ログイン'}</div>
       <div>{resObject.success}</div>
@@ -70,6 +73,6 @@ export default function CameraSetupScreen() {
       <button onClick={() => signOutWithSocialAccount()}>サインアウト</button>
       <button onClick={() => navigate('/scan')}>カメラを起動する</button>
       <button onClick={() => navigate('/battle')}>バトル画面</button>
-    </>
+    </Authenticator>
   )
 }

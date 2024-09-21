@@ -10,8 +10,24 @@ import WinOrLossScreen from "./screen/WinOrLossScreen.tsx";
 import BattleRecordScreen from "./screen/BattleRecordScreen.tsx";
 import useSound from "use-sound";
 import OpeningBgm from "./bgm/OpeningBgm.mp3"
+import './screen/login.css'
+import StartScreen from './screen/StartScreen.tsx'
 
-Amplify.configure(amplifyconfig)
+const awsconfig = {
+  ...amplifyconfig,
+  oauth: {
+    domain: 'barcode-battler-auth.auth.ap-northeast-1.amazoncognito.com',
+    scope: ['email', 'profile', 'openid'],
+    redirectSignIn: 'https://qiita-challenge-1.onrender.com,http://localhost:5173/auth/scan',
+    redirectSignOut: 'https://qiita-challenge-1.onrender.com,http://localhost:5173',
+    responseType: 'code',
+  },
+  federated: {
+    googleClientId: '831511520721-atk5lhqpb6smq3v6tbheojbo0k3qdcil.apps.googleusercontent.com',
+  },
+}
+
+Amplify.configure(awsconfig)
 
 
 export default function App() {

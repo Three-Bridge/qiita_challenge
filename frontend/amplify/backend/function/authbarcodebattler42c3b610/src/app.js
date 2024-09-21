@@ -32,12 +32,12 @@ app.use(function(req, res, next) {
 
 app.get('/auth', function(req, res) {
   // Add your code here
-  res.json({success: 'get call succeed!', url: req.url});
+  res.json({success: 'get call hoge!', url: req.url});
 });
 
 app.get('/auth/*', function(req, res) {
   // Add your code here
-  res.json({success: 'get call succeed!', url: req.url});
+  res.json({success: 'get call hoge!', url: req.url});
 });
 
 /****************************

@@ -1,0 +1,20 @@
+.amplify-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1px;
+  text-transform: capitalize;
+  font-size: 15px;
+  padding: 10px 19px;
+  cursor: pointer;
+  color: #545454;
+  background-color: #ffffff;
+  box-shadow: 0 1px 2px 1px #ddd;
+  width: 250px;
+  border:none;
+  margin:5px;
+}
+
+svg {
+  height: 18px;
+}
