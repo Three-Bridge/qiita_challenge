@@ -1,11 +1,16 @@
 import {useNavigate} from 'react-router-dom'
 
-export default function StartScreen() {
+type Props = {
+    bgmPlayHandler?: ()=>void
+}
+export default function StartScreen({bgmPlayHandler}:Props) {
   const navigate = useNavigate()
   return (
     <>
       <div>
-        <button onClick={() => navigate('/auth/login')}>つづき</button>
+        <button onClick={() => {
+            // if(bgmPlayHandler) bgmPlayHandler()
+            navigate('/auth/login')}}>つづき</button>
         <button> はじめから</button>
       </div>
     </>)

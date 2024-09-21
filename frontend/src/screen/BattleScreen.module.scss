@@ -4,6 +4,7 @@ body{
   background-color: #fafad2;
 }
 
+
 .characters{
   display: flex;
   padding: 10px;
@@ -11,15 +12,17 @@ body{
   grid-template-columns: auto;
 }
 
-.myCharacterPicture {
+.CharacterPicture {
   width: 100px;
   height: 100px;
+
 }
 
-.enemyCharacterPicture {
-  width: 100px;
-  height: 100px;
+
+.vsText{
+  text-align: center;
 }
+
 .sliderContainer{
   position: relative;
 }
@@ -27,4 +30,5 @@ body{
 .targetZone {
   position: absolute;
   top: 0;
+  z-index: 2;
 }

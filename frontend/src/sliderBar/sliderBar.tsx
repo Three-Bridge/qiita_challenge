@@ -9,8 +9,8 @@ export const Range = styled.input.attrs({
   value: number;
   max: number;
   min: number ;
+  width: string;
   color : string;
-
 }>`
     width: 100%; //バー全体の幅
     height: 20px;
@@ -20,14 +20,15 @@ export const Range = styled.input.attrs({
     -webkit-appearance: none;
     appearance: none;
     margin: 0;
+  z-index: 0;
 
     &::-webkit-slider-thumb {
         -webkit-appearance: none;
         appearance: none;
-        width: 5px;//つまみ部分の幅 
+        width: ${props => props.width};//つまみ部分の幅 
         height: 20px;
-        background-color: #4caf50;
-        cursor: pointer;
+        background-color: ${props => props.color};
+      cursor: pointer;
         pointer-events: auto; // つまみ部分のみイベントを受け取る
         position: relative;
         z-index: 1; // つまみが他の要素の上に来るように
@@ -39,15 +40,17 @@ type Props={
   // ref:React.MutableRefObject<HTMLElement | null>;
   isMoving:boolean,
   setIsMoving:React.Dispatch<SetStateAction<boolean>>;
-  setAttackPoints:React.Dispatch<SetStateAction<number>>;
+  setTapPoints:React.Dispatch<SetStateAction<number>>;
 }
-export const AutoSlider = ({isMoving,setIsMoving,setAttackPoints}:Props) => {
+export const AutoSlider = ({isMoving,setIsMoving,setTapPoints}:Props) => {
 // const AutoSlider = () => {
   const [value, setValue] = useState(50); // 初期値は50
   // const [isMoving, setIsMoving] = useState(true); // スライダーの動作状態を管理
   const [direction, setDirection] = useState(1); // スライダーの動く方向（1: 右、-1: 左）
   const min = 0;
   const max = 100;
+  const barStyleColor="green"
+  const barWidth="5px"
   const movingSpeed =25;
   const slideRef = useRef(null);
 
@@ -68,7 +71,8 @@ export const AutoSlider = ({isMoving,setIsMoving,setAttackPoints}:Props) => {
         });
       }, movingSpeed);
     }
-    setAttackPoints(Number((slideRef.current! as HTMLInputElement).value))
+    setTapPoints(Number((slideRef.current! as HTMLInputElement).value))
+
     return () => {
       if (interval) clearInterval(interval); // コンポーネントがアンマウントされるときにintervalをクリア
     };
@@ -92,8 +96,11 @@ export const AutoSlider = ({isMoving,setIsMoving,setAttackPoints}:Props) => {
         value={value}
         min={min}
         max={max}
-        onMouseDown={handleMouseDown} // つまみをクリックすると動作を停止
-        onTouchStart={handleMouseDown} // タッチデバイスでのクリックイベント
+          color={barStyleColor}
+        width={barWidth}
+        onPointerDown={handleMouseDown} // つまみをクリックすると動作を停止
+        // onMouseDown={handleMouseDown} // つまみをクリックすると動作を停止
+        // onTouchStart={handleMouseDown} // タッチデバイスでのクリックイベント
       />
     </div>
   );

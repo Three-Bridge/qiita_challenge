@@ -3,6 +3,7 @@ import {DefaultThreeBridgeRepository} from '../repository/ThreeBridgeRepository.
 import {useLocation, useNavigate} from 'react-router-dom'
 import {Authenticator} from '@aws-amplify/ui-react'
 
+
 type Props = {
   barcodeData: string | null;
 };
@@ -12,30 +13,20 @@ export default function CharacterSelectScreen({barcodeData}: Props) {
   // 自分のキャラ作製
   const [myCharacterimageUrl, setMyCharacterimageUrl] = useState<string>('')
   const [myCharacterParameters, setMyCharacterParameters] = useState<{
-    hp: string | number,
-    attack: string | number,
-    defence: string | number
-  }>({hp: '', attack: '', defence: ''})
+    hp?: number,
+    attack?: number,
+    defence?: number
+  }>({hp: undefined, attack: undefined, defence: undefined})
   const navigate = useNavigate()
   const location = useLocation()
 
   // 敵キャラ作製
   const [enemyCharacterimageUrl, setEnemyCharacterimageUrl] = useState<string>('')
   const [enemyCharacterParameters, setEnemyCharacterParameters] = useState<{
-    hp: string | number,
-    attack: string | number,
-    defence: string | number
-  }>({hp: '', attack: '', defence: ''})
-
-  // パラメータ関数
-  const paramerter = (barcodeDateString: string) => {
-
-    if (barcodeDateString === '0') {
-      return (Math.floor((Math.random() * 9 + 1) * 100)).toString()
-    } else {
-      return (Number(barcodeDateString) * 100).toString()
-    }
-  }
+    hp: number,
+    attack:  number,
+    defence:  number
+  }>({hp: undefined, attack: undefined, defence: undefined})
 
   const displayCharacter = async (barcodeDate: string | null) => {
     if (barcodeDate) {
@@ -63,10 +54,11 @@ export default function CharacterSelectScreen({barcodeData}: Props) {
 
   // パラメータ関数
     const paramerter = (barcodeDateString: string) =>{
-        if (barcodeDateString === "0") {
+       const setNumber = Number(barcodeDateString)
+        if (setNumber === 0) {
             return Math.floor((Math.random() * 9 + 1) * 100)
         } else {
-            return Number(barcodeDateString) * 100
+            return setNumber * 100
         }
     }
 
@@ -85,8 +77,6 @@ export default function CharacterSelectScreen({barcodeData}: Props) {
         }
     }
 
-
-
     useEffect(() => {
         console.log(location)
         createCharacterParameters(barcodeData)
@@ -97,12 +87,14 @@ export default function CharacterSelectScreen({barcodeData}: Props) {
     <Authenticator
       socialProviders={['google', 'amazon', 'apple', 'facebook']}>
       {/*<p className={character}>Character Select</p>*/}
-      <span>{barcodeData}</span>
+      <p >{barcodeData}</p>
       <iframe src={myCharacterimageUrl} width={'512px'} height={'512px'}/>
       <p>{`HP:${myCharacterParameters.hp}`}</p>
-      <p>{`ATTACK:${myCharacterParameters.attack}`}</p>
-      <p>{`Defense:${myCharacterParameters.defence}`}</p>
-      <button onClick={() => navigate('/auth/battle', {
+      <p>{`Attack:${myCharacterParameters.attack}`}</p>
+      <p>{`Defence:${myCharacterParameters.defence}`}</p>
+      <button onClick={() => {
+
+          navigate('/auth/battle', {
         state: {
           myCharacterParameters: {
             image: myCharacterimageUrl,
@@ -117,7 +109,7 @@ export default function CharacterSelectScreen({barcodeData}: Props) {
             defence: enemyCharacterParameters.defence
           }
         }
-      })}>たたかう
+      })}}>たたかう
       </button>
     </Authenticator>
 
