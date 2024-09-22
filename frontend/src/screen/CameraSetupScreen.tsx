@@ -68,7 +68,9 @@ export default function CameraSetupScreen() {
   return (
     <Authenticator
       socialProviders={['google', 'amazon', 'apple', 'facebook']}>
-        <h2 className={styles.loginButtonContainer}>バーコード読み取り</h2>
+      <div><img src={'../items/barcode_1.png'}></img></div>
+
+        <h2 className={styles.loginButtonContainer}>Start Config</h2>
         <div className={styles.loginButtonContainer}>{authUser?.username || '未ログイン'}</div>
         <div className={styles.loginButtonContainer}>{resObject.success}</div>
         <div className={styles.loginButtonContainer}>
