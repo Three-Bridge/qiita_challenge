@@ -89,7 +89,14 @@ export default function CharacterSelectScreen({barcodeData}: Props) {
     <Authenticator
       socialProviders={['google', 'amazon', 'apple', 'facebook']}>
       <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-        <div style={{margin: '10px', paddingTop: '40px'}}>Generated Character</div>
+        {myCharacterImageUrl ?
+          <div style={{margin: '10px', paddingTop: '40px'}}>
+            Generated Character
+          </div>
+          :
+          <div style={{margin: '10px', paddingTop: '40px'}}>
+            Generating Character...
+          </div>}
         {myCharacterImageUrl ? (
           <>
             <img
@@ -141,7 +148,7 @@ export default function CharacterSelectScreen({barcodeData}: Props) {
             }
           })
         }}>
-            Let's Fight!
+          Let's Fight!
         </button>
       </div>
 
