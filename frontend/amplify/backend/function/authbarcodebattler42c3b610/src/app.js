@@ -56,6 +56,11 @@ app.post('/auth/battleRecord', async function (req, res) {
         if (!client._connected) {
             await client.connect();
         }
+
+        const insertQuery = `INSERT INTO "battle-record" ("id","battle-result", "battle-date","user-id")
+                             VALUES ('${req.body["id"]}', '${req.body["battle-result"]}', '${req.body["battle-date"]}', '${req.body["user-id"]}' );`
+        await client.query(insertQuery);
+
         const selectQuery = `SELECT * FROM "battle-record" where "user-id"='${req.body["userName"]}' order by "battle-date" desc`;
         const response = await client.query(selectQuery);
 
