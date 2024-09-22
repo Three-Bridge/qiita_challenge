@@ -1,11 +1,8 @@
 import {AutoSlider, Range} from '../sliderBar/sliderBar.tsx'
 import  {useEffect, useState} from 'react'
-// import {useLocation} from "react-router-dom";
 import styles from './BattleScreen.module.scss'
 import {useLocation, useNavigate} from 'react-router-dom'
 import {Authenticator} from '@aws-amplify/ui-react'
-import BattleBgm from '../bgm/BattleBgm02.mp3'
-import useSound from "use-sound";
 
 type Props = {
     barcodeData: string | null;
@@ -20,15 +17,13 @@ export default function BattleScreen({barcodeData}: Props) {
         hp: number,
         attack: number,
         defence: number
-        // }>({image: '', hp: '', attack: '', defence: ''})
-    }>({image: "../src/demoPicture/demo1.png", hp: 1500, attack: 200.01, defence: 300})
+        }>({image: '', hp: 0, attack: 0, defence: 0})
     const [enemyCharacterParameters, setEnemyCharacterParameters] = useState<{
         image: string
         hp: number,
         attack: number,
         defence: number
-        // }>({image: '', hp: '', attack: '', defence: ''})
-    }>({image: '../src/demoPicture/demo2.png', hp: 1000, attack: 500, defence: 100})
+        }>({image: '', hp: 0, attack: 0, defence: 0})
     const location = useLocation()
 
 //パラメータ関数
@@ -59,7 +54,6 @@ export default function BattleScreen({barcodeData}: Props) {
     const criticalZonePosition = barSize(barcodeData![11]) * 10 <= 30 ? 30 :
         barSize(barcodeData![11]) * 10 > 70 ? 70 : barSize(barcodeData![11]) * 10
 
-    const [play, stop] = useSound(BattleBgm, {volume: 0.1})
     useEffect(() => {
         // play()
     }, []);
