@@ -23,7 +23,7 @@ export default function BattleRecordScreen() {
           </tr>
           </thead>
           <tbody>
-          {responseObject.map((ele,index) => (
+          {responseObject.map((ele: any,index: number) => (
             <tr key = {index}>
               <td >{index+1}</td>
               <td className={style.result} scope="row">{ele['battle-result']?"Win":"Lose"}</td>
