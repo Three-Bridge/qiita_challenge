@@ -6,8 +6,8 @@ body{
 .titleLogoHead{
   display: flex;
   justify-content: center;
-  width: 270px;
-  height: 130px;
+  width: 375px;
+  height: 210px;
   object-fit: contain;
 }
 
@@ -16,14 +16,6 @@ body{
   justify-content: center;
   width: 375px;
   height: 130px;
-  object-fit: contain;
-}
-
-.titleLogoUnder{
-  display: flex;
-  justify-content: center;
-  width: 70px;
-  height: 30px;
   object-fit: contain;
 }
 
@@ -48,6 +40,7 @@ body{
   //justify-content: center;
   align-items: center;
   flex-direction: column;
+  margin-top: 100px;
 }
 
 
