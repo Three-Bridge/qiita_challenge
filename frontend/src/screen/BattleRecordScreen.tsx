@@ -40,8 +40,8 @@ export default function BattleRecordScreen() {
         <div className={style.buttonContainer}>
 
       <button onClick={()=>{
-        navigator("/auth")
-      }}>最初から</button>
+        navigator("/")
+      }}>Start Again</button>
         </div>
 
       </div>
