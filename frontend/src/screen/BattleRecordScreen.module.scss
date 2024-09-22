@@ -1,0 +1,68 @@
+/* 全体のレイアウト */
+body {
+  max-width: 375px; /* 最大幅を375pxに設定 */
+  margin: 0 auto; /* 中央揃え */
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* テーブルのスタイル */
+table {
+  width: 90%; /* テーブルの幅を親要素の幅に合わせる */
+  table-layout: fixed; /* 固定幅のテーブルレイアウトを使用 */
+  border-collapse: collapse; /* 境界線を結合 */
+}
+
+td {
+  font-size: 8px;
+  text-align: center; /* テキストを左揃え */
+}
+
+/* ヘッダーのスタイル */
+thead th {
+  font-size: 20px;
+  background-color: #f5f5f5; /* ヘッダーに背景色を追加 */
+  font-weight: bold;
+  text-align: center;
+}
+
+.tableContainer {
+  display: flex;
+  justify-content: center;
+  overflow-y: scroll;
+  max-height: 400px;
+}
+
+.spacer {
+  height: 20px;
+}
+
+h1 {
+  margin-top: 100px;
+  text-align: center;
+}
+
+.idRow {
+  width:15%;
+}
+.resultRow {
+  width:50%
+}
+
+p{
+
+}
+
+.result {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.buttonContainer {
+  width:100%;
+  position:absolute;
+  display: flex;
+  bottom:20px;
+  justify-content: center;
+
+}
