@@ -3,6 +3,7 @@ import {DefaultThreeBridgeRepository} from '../repository/ThreeBridgeRepository.
 import {useLocation, useNavigate} from 'react-router-dom'
 import {Authenticator} from '@aws-amplify/ui-react'
 import spinner from '../demoPicture/CharacterSelectScreenProgress.gif'
+import style from "./StartScreen.module.scss"
 
 type Props = {
     barcodeData: string | null;
@@ -100,7 +101,7 @@ export default function CharacterSelectScreen({barcodeData}: Props) {
                 </>
             ) : (
                 <div style={spinnerContainerStyle}>
-                    <img src={spinner} alt={'CharacterSelectScreen_Progress'} style={spinnerStyle}/>
+                    <div className={style.loader}></div>
                 </div>
             )}
 
