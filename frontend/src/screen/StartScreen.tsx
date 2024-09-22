@@ -1,4 +1,5 @@
 import {useNavigate} from 'react-router-dom'
+import style from './StartScreen.module.scss'
 
 type Props = {
     bgmPlayHandler?: ()=>void
@@ -7,13 +8,20 @@ type Props = {
 export default function StartScreen({bgmPlayHandler}:Props) {
   const navigate = useNavigate()
   return (
-    <>
       <div>
-          {/*<img/ src={./src/logoPicture/barcode.png}>*/}
-        <button onClick={() => {
-            // if(bgmPlayHandler) bgmPlayHandler()
-            navigate('/auth/login')}}>つづき</button>
-        <button> はじめから</button>
+          <div className={style.titleLogo}><img className={style.titleLogoHead} src={'./src/logoPicture/barcode.png'}></img></div>
+          <div className={style.titleLogo}><img className={style.titleLogoMiddle} src={'./src/logoPicture/battler.png'}></img></div>
+          <div className={style.titleLogo}><img className={style.titleLogoMiddle} src={'./src/logoPicture/reiwa.png'}></img></div>
+        <div className={style.startBottun}>
+            <button className={style.Bottun} onClick={() => {
+                // if(bgmPlayHandler) bgmPlayHandler()
+                navigate('/auth/login')    }}>Continue    </button>
+            <button className={style.Bottun} onClick={() => {
+                    // if(bgmPlayHandler) bgmPlayHandler()
+                    navigate('/auth/login')
+                }}> New Game
+            </button>
+        </div>
       </div>
-    </>)
+  )
 }

@@ -12,6 +12,7 @@ import './screen/login.css'
 import StartScreen from './screen/StartScreen.tsx'
 import useSound from "use-sound";
 import OpeningBgm from './bgm/OpeningBgm.mp3'
+// import '/App.module.scss'
 
 
 const awsconfig = {

@@ -2,9 +2,7 @@ import {useEffect, useState} from 'react'
 import {DefaultThreeBridgeRepository} from '../repository/ThreeBridgeRepository.ts'
 import {useLocation, useNavigate} from 'react-router-dom'
 import {Authenticator} from '@aws-amplify/ui-react'
-import Loader from 'react-loaders';
-
-
+import spinner from '../demoPicture/CharacterSelectScreenProgress.gif'
 
 type Props = {
     barcodeData: string | null;
@@ -67,12 +65,12 @@ export default function CharacterSelectScreen({barcodeData}: Props) {
     const createCharacterParameters = (barcodeData: string | null) => {
         if (barcodeData) {
             // 自分のキャラパラメータ設定
-            const myCharacterHp = parameter(barcodeData[4]) * 5
+            const myCharacterHp = parameter(barcodeData[4]) + 3000
             const myCharacterAttack = parameter(barcodeData[5])
             const myCharacterDefence = parameter(barcodeData[6])
             setMyCharacterParameters({hp: myCharacterHp, attack: myCharacterAttack, defence: myCharacterDefence})
             // 敵のキャラパラメータ設定
-            const enemyCharacterHp = parameter(barcodeData[8]) * 5
+            const enemyCharacterHp = parameter(barcodeData[8]) + 3000
             const enemyCharacterAttack = parameter(barcodeData[9])
             const enemyCharacterDefence = parameter(barcodeData[10])
             setEnemyCharacterParameters({
@@ -100,19 +98,12 @@ export default function CharacterSelectScreen({barcodeData}: Props) {
                     <p>{`Attack:${myCharacterParameters.attack}`}</p>
                     <p>{`Defence:${myCharacterParameters.defence}`}</p>
                 </>
-                ) : (
-                    <div className="loader">
-                        <div className="loader-inner pacman">
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                        </div>
-                    </div>
-                )
+            ) : (
+                <div style={spinnerContainerStyle}>
+                    <img src={spinner} alt={'CharacterSelectScreen_Progress'} style={spinnerStyle}/>
+                </div>
+            )}
 
-            }
             <button onClick={() => {
                 navigate('/auth/battle', {
                     state: {
@@ -133,6 +124,17 @@ export default function CharacterSelectScreen({barcodeData}: Props) {
             }}>たたかう
             </button>
         </Authenticator>
-
     )
 }
+
+const spinnerContainerStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh', // コンテナを画面全体に広げる例
+};
+
+const spinnerStyle = {
+    width: '100px', // サイズ調整
+    height: '100px',
+};

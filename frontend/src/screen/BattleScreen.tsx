@@ -1,5 +1,5 @@
 import {AutoSlider, Range} from '../sliderBar/sliderBar.tsx'
-import React, {useEffect, useState} from 'react'
+import  {useEffect, useState} from 'react'
 // import {useLocation} from "react-router-dom";
 import styles from './BattleScreen.module.scss'
 import {useLocation, useNavigate} from 'react-router-dom'
@@ -64,20 +64,20 @@ export default function BattleScreen({barcodeData}: Props) {
     useEffect(() => {
         // play()
     }, []);
-    // useEffect(() => {
-    //   setMyCharacterParameters({
-    //     image: location.state.myCharacterParameters.image,
-    //     hp: location.state.myCharacterParameters.hp,
-    //     attack: location.state.myCharacterParameters.attack,
-    //     defence: location.state.myCharacterParameters.defence,
-    //   })
-    //   setEnemyCharacterParameters({
-    //     image: location.state.enemyCharacterParameters.image,
-    //     hp: location.state.enemyCharacterParameters.hp,
-    //     attack: location.state.enemyCharacterParameters.attack,
-    //     defence: location.state.enemyCharacterParameters.defence,
-    //   })
-    // }, [])
+    useEffect(() => {
+      setMyCharacterParameters({
+        image: location.state.myCharacterParameters.image,
+        hp: location.state.myCharacterParameters.hp,
+        attack: location.state.myCharacterParameters.attack,
+        defence: location.state.myCharacterParameters.defence,
+      })
+      setEnemyCharacterParameters({
+        image: location.state.enemyCharacterParameters.image,
+        hp: location.state.enemyCharacterParameters.hp,
+        attack: location.state.enemyCharacterParameters.attack,
+        defence: location.state.enemyCharacterParameters.defence,
+      })
+    }, [])
 
     const handleMouseDown = () => {
         setIsMoving((current)=>current +1)
@@ -138,7 +138,7 @@ export default function BattleScreen({barcodeData}: Props) {
     return (
         <Authenticator
             socialProviders={['google', 'amazon', 'apple', 'facebook']}>
-            <div>Fight!</div>
+            <div className={styles.title}>Fight!</div>
             <div className={styles.characters}>
                 <div className={styles.myCharacter}>
                     <div className={styles.myName}>user</div>

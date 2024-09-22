@@ -6,16 +6,16 @@ $gray: #dcdcdc;
 $text: #fff;
 $bg-color: #ed5565;
 
-html,
-body {
-  padding: 0;
-  margin: 0;
-  height: 100%;
-  font-size: 16px;
-  background: $bg-color;
-  color: $text;
-  font-family: 'Source Sans Pro';
-}
+//html,
+//body {
+//  padding: 0;
+//  margin: 0;
+//  height: 100%;
+//  font-size: 16px;
+//  background: $bg-color;
+//  color: $text;
+//  font-family: 'Source Sans Pro';
+//}
 
 h1 {
   font-size: 2.8em;
@@ -151,36 +151,36 @@ main {
  * Util classes
  */
 
-.left {
-  float: left;
-}
-
-.right {
-  float: right;
-}
-
-.cf {
-  content: "";
-  display: table;
-  clear: both;
-}
+//.left {
+//  float: left;
+//}
+//
+//.right {
+//  float: right;
+//}
+//
+//.cf {
+//  content: "";
+//  display: table;
+//  clear: both;
+//}
 
 /**
  * Buttons
  */
 
-.btn {
-  color: $text;
-  padding: .75rem 1.25rem;
-  border: 2px solid $text;
-  border-radius: 4px;
-  text-decoration: none;
-  transition: transform .1s ease-out, border .1s ease-out, background-color .15s ease-out, color .1s ease-out;
-  margin: 2rem 0;
-
-  &:hover {
-    transform: scale(1.01562);
-    background-color: #fff;
-    color: $bg-color;
-  }
-}
+//.btn {
+//  color: $text;
+//  padding: .75rem 1.25rem;
+//  border: 2px solid $text;
+//  border-radius: 4px;
+//  text-decoration: none;
+//  transition: transform .1s ease-out, border .1s ease-out, background-color .15s ease-out, color .1s ease-out;
+//  margin: 2rem 0;
+//
+//  &:hover {
+//    transform: scale(1.01562);
+//    background-color: #fff;
+//    color: $bg-color;
+//  }
+//}
