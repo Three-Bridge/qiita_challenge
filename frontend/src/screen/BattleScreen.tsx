@@ -9,7 +9,6 @@ import useSound from "use-sound";
 
 type Props = {
     barcodeData: string | null;
-    endPoint : false | true;
 };
 
 export default function BattleScreen({barcodeData}: Props) {
@@ -22,7 +21,7 @@ export default function BattleScreen({barcodeData}: Props) {
         attack: number,
         defence: number
         // }>({image: '', hp: '', attack: '', defence: ''})
-    }>({image: "../src/demoPicture/demo1.png", hp: 1500, attack: 200, defence: 300})
+    }>({image: "../src/demoPicture/demo1.png", hp: 1500, attack: 200.01, defence: 300})
     const [enemyCharacterParameters, setEnemyCharacterParameters] = useState<{
         image: string
         hp: number,
@@ -86,12 +85,12 @@ export default function BattleScreen({barcodeData}: Props) {
             if(myCharacterParameters.attack > enemyCharacterParameters.defence) {
                 setEnemyCharacterParameters({
                     ...enemyCharacterParameters,
-                    hp: enemyCharacterParameters.hp - myCharacterParameters.attack * 1.5
+                    hp: Math.floor(enemyCharacterParameters.hp - (myCharacterParameters.attack * 1.5))
                 })
             }else {
                 setEnemyCharacterParameters({
                     ...enemyCharacterParameters,
-                    hp: enemyCharacterParameters.hp - myCharacterParameters.attack * 1.2
+                    hp: Math.floor(enemyCharacterParameters.hp - (myCharacterParameters.attack * 1.2))
                 })
             }
         }
@@ -101,19 +100,19 @@ export default function BattleScreen({barcodeData}: Props) {
                 const myAttack = myCharacterParameters.attack + (myCharacterParameters.attack - enemyCharacterParameters.defence) * 0.1
                 setEnemyCharacterParameters({
                     ...enemyCharacterParameters,
-                    hp: enemyCharacterParameters.hp - myAttack
+                    hp: Math.floor(enemyCharacterParameters.hp - myAttack)
                 })
             }else if(myCharacterParameters.attack == enemyCharacterParameters.defence){
                 setEnemyCharacterParameters({
                     ...enemyCharacterParameters,
-                    hp: enemyCharacterParameters.hp - myCharacterParameters.attack
+                    hp: Math.floor(enemyCharacterParameters.hp - myCharacterParameters.attack)
                 })
 
             }else {
                 const myAttack = myCharacterParameters.attack - (myCharacterParameters.attack - enemyCharacterParameters.defence) * 0.1
                 setEnemyCharacterParameters({
                     ...enemyCharacterParameters,
-                    hp: enemyCharacterParameters.hp - myAttack
+                    hp: Math.floor(enemyCharacterParameters.hp - myAttack)
                 })
 
             }
@@ -124,7 +123,7 @@ export default function BattleScreen({barcodeData}: Props) {
         console.log(Math.round((Math.random()/2+0.5)*10)/10)
         setMyCharacterParameters({
             ...myCharacterParameters,
-            hp: myCharacterParameters.hp - enemyCharacterParameters.attack * (Math.round((Math.random()/2+0.5)*10)/10)
+            hp: Math.floor(myCharacterParameters.hp - enemyCharacterParameters.attack * (Math.round((Math.random()/2+0.5)*10)/10))
         })
     }
 

@@ -30,7 +30,7 @@ Amplify.configure(awsconfig)
 
 export default function App() {
     const [barcodeData, setBarcodeData] = useState<string | null>(null)
-    const dummyBarcodeData = "4901978083168";
+    // const dummyBarcodeData = "4901978083168";
 
     return (
         <>
@@ -40,7 +40,7 @@ export default function App() {
                     <Route path='/auth/login' element={<CameraSetupScreen/>}/>
                     <Route path='/auth/scan' element={<BarcodeScreen setBarcodeData={setBarcodeData}/>}/>
                     <Route path='/auth/scan-select' element={<CharacterSelectScreen barcodeData={barcodeData}/>}/>
-                    <Route path='/auth/battle' element={<BattleScreen barcodeData={dummyBarcodeData}/>}/>
+                    <Route path='/auth/battle' element={<BattleScreen barcodeData={barcodeData}/>}/>
                     <Route path='/auth/winOrLoss' element={<WinOrLossScreen/>}/>
                     <Route path='/auth/battleRecord' element={<BattleRecordScreen/>}/>
                 </Routes>
