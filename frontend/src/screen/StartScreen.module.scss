@@ -3,27 +3,20 @@ body{
   background-color: #fafad2;
 }
 
-.titleLogo{
-  display: flex;
-  justify-content: center;
-  margin-bottom: 0px;
-}
-
 .titleLogoHead{
   display: flex;
   justify-content: center;
-  width: 300px;
+  width: 270px;
   height: 130px;
-  object-fit: cover;
-
+  object-fit: contain;
 }
 
 .titleLogoMiddle{
   display: flex;
   justify-content: center;
-  width: 450px;
+  width: 375px;
   height: 130px;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .titleLogoUnder{
@@ -31,7 +24,7 @@ body{
   justify-content: center;
   width: 70px;
   height: 30px;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .startBottun{
@@ -50,5 +43,11 @@ body{
   justify-content: center;
 }
 
+.screenContainer{
+  display: flex;
+  //justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 
 

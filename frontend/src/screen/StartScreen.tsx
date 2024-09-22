@@ -8,10 +8,10 @@ type Props = {
 export default function StartScreen({bgmPlayHandler}:Props) {
   const navigate = useNavigate()
   return (
-      <div>
-          <div className={style.titleLogo}><img className={style.titleLogoHead} src={'./src/logoPicture/barcode.png'}></img></div>
-          <div className={style.titleLogo}><img className={style.titleLogoMiddle} src={'./src/logoPicture/battler.png'}></img></div>
-          <div className={style.titleLogo}><img className={style.titleLogoMiddle} src={'./src/logoPicture/reiwa.png'}></img></div>
+      <div className={style.screenContainer}>
+          <div><img className={style.titleLogoHead} src={'./src/logoPicture/barcode.png'}></img></div>
+          <div><img className={style.titleLogoMiddle} src={'./src/logoPicture/battler.png'}></img></div>
+          <div><img className={style.titleLogoMiddle} src={'./src/logoPicture/reiwa.png'}></img></div>
         <div className={style.startBottun}>
             <button className={style.Bottun} onClick={() => {
                 // if(bgmPlayHandler) bgmPlayHandler()
