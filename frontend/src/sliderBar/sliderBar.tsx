@@ -90,7 +90,7 @@ export const AutoSlider = ({isMoving,setIsMoving,setTapPoints, enemyAttack}:Prop
       e.clientX <= target.getBoundingClientRect().right )
     {
     console.log("X",e.clientX);
-      setIsMoving(isMoving); // つまみ部分をクリックした場合、動作を停止・再開
+      setIsMoving(!isMoving); // つまみ部分をクリックした場合、動作を停止・再開
     }
   };
 
