@@ -98,9 +98,10 @@ export default function BattleScreen({barcodeData}: Props) {
         if (setPoints >= 50 - targetZoneWidth / 2 && setPoints <= 50 + targetZoneWidth / 2) {
             console.log("attack", setPoints)
             if (myCharacterParameters.attack > enemyCharacterParameters.defence) {
+                const myAttack = myCharacterParameters.attack + (myCharacterParameters.attack - enemyCharacterParameters.defence) * 0.1
                 setEnemyCharacterParameters({
                     ...enemyCharacterParameters,
-                    hp: enemyCharacterParameters.hp - (myCharacterParameters.attack + (myCharacterParameters.attack - enemyCharacterParameters.defence) * 0.1)
+                    hp: enemyCharacterParameters.hp - myAttack
                 })
             }else if(myCharacterParameters.attack == enemyCharacterParameters.defence){
                 setEnemyCharacterParameters({
@@ -109,9 +110,10 @@ export default function BattleScreen({barcodeData}: Props) {
                 })
 
             }else {
+                const myAttack = myCharacterParameters.attack - (myCharacterParameters.attack - enemyCharacterParameters.defence) * 0.1
                 setEnemyCharacterParameters({
                     ...enemyCharacterParameters,
-                    hp: enemyCharacterParameters.hp - (myCharacterParameters.attack - (myCharacterParameters.attack - enemyCharacterParameters.defence) * 0.1)
+                    hp: enemyCharacterParameters.hp - myAttack
                 })
 
             }
@@ -141,8 +143,8 @@ export default function BattleScreen({barcodeData}: Props) {
             <div className={styles.title}>Fight!</div>
             <div className={styles.characters}>
                 <div className={styles.myCharacter}>
-                    <div className={styles.myName}>user</div>
-                    <p className={styles.myCharacterName}>myCharacter</p>
+                    <div className={styles.myName}>myCharacter</div>
+                    {/*<p className={styles.myCharacterName}>myCharacter</p>*/}
                     <img className={styles.characterPicture} src={myCharacterParameters.image} alt={'demo1'}></img>
                     <p>{`HP:${myCharacterParameters.hp}`}</p>
                     <p>{`Attack:${myCharacterParameters.attack}`}</p>
@@ -151,7 +153,7 @@ export default function BattleScreen({barcodeData}: Props) {
                 <div className={styles.vsText}>vs</div>
                 <div className={styles.enemyCharacter}>
                     <div className={styles.enemyName}>CPU</div>
-                    <p>enemyCharacter</p>
+                    {/*<p>enemyCharacter</p>*/}
                     <img className={styles.characterPicture} src={enemyCharacterParameters.image}></img>
                     <p>{`HP:${enemyCharacterParameters.hp}`}</p>
                     <p>{`Attack:${enemyCharacterParameters.attack}`}</p>
@@ -183,11 +185,13 @@ export default function BattleScreen({barcodeData}: Props) {
                     className={styles.criticalZone}
                     barBackgroundColor={'transparent'}/>
             </div>
-            <button className={styles.tapBottun}
-                    onClick={handleMouseDown}
-            >
-                {isMoving ? "Attack" : "Start"}
-            </button>
+            <div className={styles.tapButtonContainer}>
+                <button className={styles.tapBottun}
+                        onClick={handleMouseDown}
+                >
+                    {isMoving ? "Attack" : "Start"}
+                </button>
+            </div>
         </Authenticator>
     )
 }
