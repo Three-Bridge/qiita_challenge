@@ -9,8 +9,6 @@ import BattleScreen from './screen/BattleScreen.tsx'
 import WinOrLossScreen from './screen/WinOrLossScreen.tsx'
 import BattleRecordScreen from './screen/BattleRecordScreen.tsx'
 import StartScreen from './screen/StartScreen.tsx'
-import useSound from 'use-sound'
-import OpeningBgm from './bgm/OpeningBgm.mp3'
 import './App.module.scss'
 
 
@@ -30,24 +28,15 @@ const awsconfig = {
 
 Amplify.configure(awsconfig)
 
-
-
 export default function App() {
     const [barcodeData, setBarcodeData] = useState<string | null>(null)
-    const [openingBgmPlay, openingBgmStop] = useSound(OpeningBgm, {volume: 0.1})
-
     const dummyBarcodeData = "4901978083168";
-
-    const openigBgmPlayHandler = () => {
-        openingBgmPlay()
-    }
-// const openingBgmStopHandler = ()=>{openingBgmStop()}
 
     return (
         <>
             <BrowserRouter>
                 <Routes>
-                    <Route path='/' element={<StartScreen bgmPlayHandler={openigBgmPlayHandler}/>}/>
+                    <Route path='/' element={<StartScreen/>}/>
                     <Route path='/auth/login' element={<CameraSetupScreen/>}/>
                     <Route path='/auth/scan' element={<BarcodeScreen setBarcodeData={setBarcodeData}/>}/>
                     <Route path='/auth/scan-select' element={<CharacterSelectScreen barcodeData={barcodeData}/>}/>

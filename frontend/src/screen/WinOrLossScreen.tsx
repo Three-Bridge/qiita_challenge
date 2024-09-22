@@ -11,6 +11,8 @@ export default function WinOrLossScreen() {
     const username = await currentAuthenticatedUser()
     if (username) {
       const res = await postBattleRecords(username)
+      if (res === undefined) return
+
       const resText = await res.body.text()
       const data = JSON.parse(resText)
       navigate('/auth/battleRecord', {state: data})
@@ -68,21 +70,34 @@ export default function WinOrLossScreen() {
   return (
     <Authenticator
       socialProviders={['google', 'amazon', 'apple', 'facebook']}>
-      <h2>{`I ${location.state.userResult}!!`}</h2>`
-      <img src={location.state.winCharacter}></img>
-      <div>{location.state.winner}</div>
-      <button onClick={() => {
-        navigate('/auth/login')
-      }}>New Game!!!
-      </button>
-      <button onClick={() => {
-        navigate('/auth/battle')
-      }}>Try Again!!!
-      </button>
-      <button onClick={() => {
-        handleBattleRecord()
-      }}>Battle Record
-      </button>
+      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between'}}>
+        <h2
+          style={{marginTop: '60px'}}
+        >
+          {`I ${location.state.userResult}!!`}
+        </h2>`
+        <img
+          src={location.state.winCharacter}
+          style={{width: '220px', margin: '20px'}}
+        ></img>
+        <div>{location.state.winner}</div>
+        <button
+          onClick={() => navigate('/auth/login')}
+          style={{margin: '10px', width: '90%'}}
+        >New Game!!!
+        </button>
+        <button
+          onClick={() => navigate('/auth/battle')}
+          style={{margin: '10px', width: '90%'}}
+        >Try Again!!
+        </button>
+        <button
+          onClick={() => handleBattleRecord()}
+          style={{margin: '10px', width: '90%'}}
+        >Battle Record
+        </button>
+      </div>
+
     </Authenticator>
   )
 }
