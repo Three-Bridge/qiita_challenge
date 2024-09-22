@@ -3,12 +3,11 @@ import {useEffect, useState} from 'react'
 import {signInWithRedirect} from '@aws-amplify/auth'
 import {AuthUser, getCurrentUser, signOut} from 'aws-amplify/auth/cognito'
 import {get} from 'aws-amplify/api'
-import './login.css'
 import styles from './CameraSetupScreen.module.scss'
 import {Authenticator} from '@aws-amplify/ui-react'
-import style from "./StartScreen.module.scss";
 import barcodePictureTop from '../items/barcodeTop.png'
 import barcodePictureUnder from '../items/barcodeUnder.png'
+import '@aws-amplify/ui-react/styles.css';
 
 type ResObject = {
   success: string,
