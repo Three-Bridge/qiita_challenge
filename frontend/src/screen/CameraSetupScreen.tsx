@@ -7,7 +7,8 @@ import './login.css'
 import styles from './CameraSetupScreen.module.scss'
 import {Authenticator} from '@aws-amplify/ui-react'
 import style from "./StartScreen.module.scss";
-import barcodePicture from '../items/barcode_1.png'
+import barcodePictureTop from '../items/barcodeTop.png'
+import barcodePictureUnder from '../items/barcodeUnder.png'
 
 type ResObject = {
   success: string,
@@ -68,7 +69,7 @@ export default function CameraSetupScreen() {
   return (
       <Authenticator
           socialProviders={['google', 'amazon', 'apple', 'facebook']}>
-        <div className={styles.topBarcode} ><img src={barcodePicture}></img></div>
+        <div className={styles.topBarcode} ><img src={barcodePictureTop}></img></div>
 
         <h2 className={styles.loginButtonContainer}>Start Config</h2>
         <div className={styles.loginButtonContainer}>{authUser?.username || '未ログイン'}</div>
@@ -79,7 +80,7 @@ export default function CameraSetupScreen() {
           <button className={styles.loginButton} onClick={() => navigate('/auth/scan')}>Scan Barcode</button>
           <button className={styles.loginButton} onClick={() => navigate('/auth/battle')}>バトル画面</button>
         </div>
-        <img className={styles.underBarcode} src={barcodePicture}></img>
+        <img className={styles.underBarcode} src={barcodePictureUnder}></img>
       </Authenticator>
   )
 }
