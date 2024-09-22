@@ -79,7 +79,7 @@ export default function CameraSetupScreen() {
           <button className={styles.loginButton} onClick={() => navigate('/auth/scan')}>Scan Barcode</button>
           {/*<button className={styles.loginButton} onClick={() => navigate('/auth/battle')}>バトル画面</button>*/}
         </div>
-        <img className={styles.underBarcode} src={barcodePictureUnder}></img>
+        <div className={styles.underBarcode} ><img className={styles.barcodePictureUnder} src={barcodePictureUnder}></img></div>
       </Authenticator>
-  )
+)
 }
